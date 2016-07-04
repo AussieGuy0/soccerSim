@@ -9,6 +9,7 @@ public class Match {
     private int awayTeamGoals;
     private Team homeTeam;
     private Team awayTeam;
+    private boolean firstHalf;
 
     public Match(Team homeTeam, Team awayTeam) {
         System.out.println("Match starting: "+homeTeam.getName()+ " vs "+awayTeam.getName());
@@ -17,23 +18,33 @@ public class Match {
 
         homeTeamGoals = 0;
         awayTeamGoals = 0;
+        firstHalf = true;
 
-        firstHalf();
-        secondHalf();
+        playHalf();
+        playHalf();
 
         System.out.println("There's the final whistle!");
         System.out.println(homeTeam.getName() + " " +homeTeamGoals+ " - " + awayTeam.getName() + " " + awayTeamGoals);
-
-
     }
 
-    private void firstHalf() {
-        System.out.println("Start of first half");
-        int homeTeamAttempts = homeTeam.getFirstHalfattempts()  - awayTeam.getFirstHalfDefenseAttempts();
-        int awayTeamAttempts = awayTeam.getFirstHalfattempts()  - homeTeam.getFirstHalfDefenseAttempts();
+    private void playHalf() {
+        int homeTeamAttempts, awayTeamAttempts, homeTeamSOGChance, awayTeamSOGChance;
 
-        int homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getFirstHalfDefensiveShotOnGoal();
-        int awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getFirstHalfDefensiveShotOnGoal();
+        if (firstHalf) {
+            System.out.println("Start of first half");
+            homeTeamAttempts = homeTeam.getFirstHalfattempts() - awayTeam.getFirstHalfDefenseAttempts();
+            awayTeamAttempts = awayTeam.getFirstHalfattempts() - homeTeam.getFirstHalfDefenseAttempts();
+            homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getFirstHalfDefensiveShotOnGoal();
+            awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getFirstHalfDefensiveShotOnGoal();
+            firstHalf = false;
+        } else {
+            System.out.println("Start of second half");
+            homeTeamAttempts = homeTeam.getSecondHalfattempts()  - awayTeam.getSecondHalfDefenseAttempts();
+            awayTeamAttempts = awayTeam.getSecondHalfattempts()  - homeTeam.getSecondHalfDefenseAttempts();
+            homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getSecondHalfDefensiveShotOnGoal();
+            awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getSecondHalfDefensiveShotOnGoal();
+
+        }
 
         Random random =  new Random();
 
@@ -43,46 +54,14 @@ public class Match {
                 homeTeamShots++;
             }
         }
-
         int awayTeamShots = 0;
         for (int i = 0; i < awayTeamAttempts; i++) {
             if(random.nextInt(100) + 1 < awayTeamSOGChance) {
                 awayTeamShots++;
             }
         }
-
         determineShots(homeTeam, homeTeamShots);
         determineShots(awayTeam, awayTeamShots);
-        System.out.println();
-    }
-
-    private void secondHalf() {
-        System.out.println("Start of second half");
-        int homeTeamAttempts = homeTeam.getSecondHalfattempts()  - awayTeam.getSecondHalfDefenseAttempts();
-        int awayTeamAttempts = awayTeam.getSecondHalfattempts()  - homeTeam.getSecondHalfDefenseAttempts();
-
-        int homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getSecondHalfDefensiveShotOnGoal();
-        int awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getSecondHalfDefensiveShotOnGoal();
-
-        Random random =  new Random();
-
-        int homeTeamShots = 0;
-        for (int i = 0; i < homeTeamAttempts; i++) {
-            if ( random.nextInt(100)+ 1 <= homeTeamSOGChance) {
-                homeTeamShots++;
-            }
-        }
-
-        int awayTeamShots = 0;
-        for (int i = 0; i < awayTeamAttempts; i++) {
-            if(random.nextInt(100) + 1 < awayTeamSOGChance) {
-                awayTeamShots++;
-            }
-        }
-
-        determineShots(homeTeam, homeTeamShots);
-        determineShots(awayTeam, awayTeamShots);
-
         System.out.println();
     }
 
@@ -102,6 +81,5 @@ public class Match {
                 System.out.println("Close miss by " +shooter.getName());
             }
         }
-
     }
 }
