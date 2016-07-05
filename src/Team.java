@@ -1,26 +1,26 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by anthony on 1/07/16.
+ * This class stores information about a team. A team is composed of players.
  */
 public class Team {
 
-    private ArrayList<Player> players;
-    private String name;
+    //TODO: Add goalies
+    private final ArrayList<Player> players;
+    private final String name;
 
-    private int firstHalfattempts;
-    private int secondHalfattempts;
-    private int shotsGoal;
-    private int firstHalfDefenseAttempts;
-    private int secondHalfDefenseAttempts;
-    private int firstHalfDefensiveShotOnGoal;
-    private int secondHalfDefensiveShotOnGoal;
-    private String formation;
-    private String strategy;
+    private final int firstHalfattempts;
+    private final int secondHalfattempts;
+    private final int shotsGoal;
+    private final int firstHalfDefenseAttempts;
+    private final int secondHalfDefenseAttempts;
+    private final int firstHalfDefensiveShotOnGoal;
+    private final int secondHalfDefensiveShotOnGoal;
+    private final String formation;
+    private final String strategy;
 
     public Team(String name, int firstHalfattempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, String strategy) {
         this.firstHalfattempts = firstHalfattempts;
@@ -39,6 +39,7 @@ public class Team {
     public String getName() {
         return name;
     }
+
     public int getShotsGoal() {
         return shotsGoal;
     }
@@ -80,13 +81,18 @@ public class Team {
             BufferedReader reader = new BufferedReader(new FileReader(s));
             while (reader.ready()) {
                 String[] line = reader.readLine().split("\\|");
-                players.add(new Player(line[0],Integer.parseInt(line[1]),Integer.parseInt(line[2])));
+                players.add(new Player(line[0], Integer.parseInt(line[1]), Integer.parseInt(line[2])));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Returns the shooter based on generated value from Match.
+     * @param value The randomly generated value.
+     * @return A Player who is considered the shooter.
+     */
     public Player getShooter(int value) {
         for (Player player : players) {
             if (player.getShotRange() >= value) {
