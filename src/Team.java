@@ -90,6 +90,7 @@ public class Team {
 
     /**
      * Returns the shooter based on generated value from Match.
+     *
      * @param value The randomly generated value.
      * @return A Player who is considered the shooter.
      */

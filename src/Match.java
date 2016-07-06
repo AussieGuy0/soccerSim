@@ -10,10 +10,12 @@ public class Match {
     private final Team homeTeam;
     private final Team awayTeam;
     private boolean firstHalf;
-    private Random random;
+    private final Random random;
+    private int minute;
 
     /**
      * Creates and simulates a match between two teams.
+     *
      * @param homeTeam The team that is playing at their home ground.
      * @param awayTeam The team that has travelled to play.
      */
@@ -25,6 +27,7 @@ public class Match {
         homeTeamGoals = 0;
         awayTeamGoals = 0;
         firstHalf = true; //Used to determine which half is currently being played
+        random = new Random();
 
         playHalf();
         playHalf();
@@ -40,6 +43,7 @@ public class Match {
     private void playHalf() {
         int homeTeamAttempts, awayTeamAttempts, homeTeamSOGChance, awayTeamSOGChance;
         if (firstHalf) {
+            minute = 1;
             System.out.println("Start of first half");
             homeTeamAttempts = homeTeam.getFirstHalfattempts() - awayTeam.getFirstHalfDefenseAttempts();
             awayTeamAttempts = awayTeam.getFirstHalfattempts() - homeTeam.getFirstHalfDefenseAttempts();
@@ -47,49 +51,67 @@ public class Match {
             awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getFirstHalfDefensiveShotOnGoal();
             firstHalf = false;
         } else {
+            minute = 47;
             System.out.println("Start of second half");
             homeTeamAttempts = homeTeam.getSecondHalfattempts() - awayTeam.getSecondHalfDefenseAttempts();
             awayTeamAttempts = awayTeam.getSecondHalfattempts() - homeTeam.getSecondHalfDefenseAttempts();
             homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getSecondHalfDefensiveShotOnGoal();
             awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getSecondHalfDefensiveShotOnGoal();
         }
-        random = new Random();
-        int homeTeamShots = 0;
-        for (int i = 0; i < homeTeamAttempts; i++) {
-            if (random.nextInt(100) + 1 <= homeTeamSOGChance) {
-                homeTeamShots++;
-            }
-        }
-        int awayTeamShots = 0;
-        for (int i = 0; i < awayTeamAttempts; i++) {
-            if (random.nextInt(100) + 1 < awayTeamSOGChance) {
-                awayTeamShots++;
-            }
-        }
-        determineShots(homeTeam, homeTeamShots);
-        determineShots(awayTeam, awayTeamShots);
+
+        alternateAttempts(homeTeamAttempts, awayTeamAttempts, homeTeamSOGChance, awayTeamSOGChance);
         System.out.println();
     }
 
     /**
-     * Determines the shooter for each shot on goal and calculates if it is a goal or not.
-     * @param team The team that is shooting.
-     * @param numOfShots The number of shots that the team has had.
+     * Alternates checking both teams if an attempt is a shot on goal. If shot on goal, determines shooter and if they
+     * score.
+     *
+     * @param homeTeamAttempts  The amount of attempts the home team has
+     * @param awayTeamAttempts  The amount of attempts the away team has
+     * @param homeTeamSOGChance The chance the home team will score
+     * @param awayTeamSOGChance The chance the away team will score.
      */
-    private void determineShots(Team team, int numOfShots) {
-        for (int i = 0; i < numOfShots; i++) {
-            Player shooter = team.getShooter(random.nextInt(100) + 1);
-            if (random.nextInt(10) + 1 >= shooter.getGoal()) {
-                if (team.equals(homeTeam)) {
-                    homeTeamGoals++;
-                } else {
-                    awayTeamGoals++;
+    private void alternateAttempts(int homeTeamAttempts, int awayTeamAttempts, int homeTeamSOGChance, int awayTeamSOGChance) {
+        int homeAttemptsSoFar = 0;
+        int awayAttemptsSoFar = 0;
+        for (int i = 0; i < Math.max(homeTeamAttempts, awayTeamAttempts); i++) {
+            if (homeAttemptsSoFar < homeTeamAttempts) {
+                minute += 2;
+                if (random.nextInt(100) + 1 <= homeTeamSOGChance) {
+                    determineShot(homeTeam);
                 }
-                System.out.println("Goal for " + team.getName() + "! What a shot by " + shooter.getName() + "!");
-                System.out.println("The score is now: " + homeTeamGoals + " - " + awayTeamGoals);
-            } else {
-                System.out.println("Close miss by " + shooter.getName());
+                homeAttemptsSoFar++;
             }
+
+            if (awayAttemptsSoFar < awayTeamAttempts) {
+                minute += 2;
+                if (random.nextInt(100) + 1 < awayTeamSOGChance) {
+                    determineShot(awayTeam);
+                }
+                awayAttemptsSoFar++;
+            }
+        }
+    }
+
+    /**
+     * Determines the shot taker and if they score a goal
+     *
+     * @param team The team who is shooting
+     */
+    private void determineShot(Team team) {
+        Player shooter = team.getShooter(random.nextInt(100) + 1);
+        System.out.print(minute + "' ");
+        if (random.nextInt(10) + 1 >= shooter.getGoal()) {
+            if (team.equals(homeTeam)) {
+                homeTeamGoals++;
+            } else {
+                awayTeamGoals++;
+            }
+            System.out.println("Goal for " + team.getName() + "! What a shot by " + shooter.getName() + "!");
+            System.out.println("The score is now: " + homeTeamGoals + " - " + awayTeamGoals);
+        } else {
+            System.out.println("Close miss by " + shooter.getName());
         }
     }
 }
