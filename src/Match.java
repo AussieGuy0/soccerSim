@@ -7,6 +7,10 @@ public class Match {
 
     private int homeTeamGoals;
     private int awayTeamGoals;
+    private int homeTeamAttemptsTotal;
+    private int awayTeamAttemptsTotal;
+    private int homeTeamShotsTotal;
+    private int awayTeamShotsTotal;
     private final Team homeTeam;
     private final Team awayTeam;
     private boolean firstHalf;
@@ -26,6 +30,11 @@ public class Match {
 
         homeTeamGoals = 0;
         awayTeamGoals = 0;
+
+        homeTeamAttemptsTotal = 0;
+        homeTeamShotsTotal = 0;
+        awayTeamAttemptsTotal = 0;
+        awayTeamShotsTotal = 0;
         firstHalf = true; //Used to determine which half is currently being played
         random = new Random();
 
@@ -33,7 +42,10 @@ public class Match {
         playHalf();
 
         System.out.println("There's the final whistle!");
-        System.out.println(homeTeam.getName() + " " + homeTeamGoals + " - " + awayTeam.getName() + " " + awayTeamGoals);
+        System.out.println(homeTeam.getName() + " |     Teams     | " + awayTeam.getName());
+        System.out.println("    " + homeTeamGoals + " |     Goals     | "  + awayTeamGoals);
+        System.out.println("   " + homeTeamAttemptsTotal + " |   Attempts    | "  + awayTeamAttemptsTotal);
+        System.out.println("    " + homeTeamShotsTotal + " | Shots on Goal | "  + awayTeamShotsTotal);
     }
 
     /**
@@ -58,6 +70,8 @@ public class Match {
             homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getSecondHalfDefensiveShotOnGoal();
             awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getSecondHalfDefensiveShotOnGoal();
         }
+        homeTeamAttemptsTotal += homeTeamAttempts;
+        awayTeamAttemptsTotal += awayTeamAttempts;
 
         alternateAttempts(homeTeamAttempts, awayTeamAttempts, homeTeamSOGChance, awayTeamSOGChance);
         System.out.println();
@@ -80,6 +94,7 @@ public class Match {
                 minute += 2;
                 if (random.nextInt(100) + 1 <= homeTeamSOGChance) {
                     determineShot(homeTeam);
+                    homeTeamShotsTotal++;
                 }
                 homeAttemptsSoFar++;
             }
@@ -88,6 +103,7 @@ public class Match {
                 minute += 2;
                 if (random.nextInt(100) + 1 < awayTeamSOGChance) {
                     determineShot(awayTeam);
+                    awayTeamShotsTotal++;
                 }
                 awayAttemptsSoFar++;
             }
