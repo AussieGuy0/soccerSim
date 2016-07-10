@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Simple {
 
@@ -7,6 +9,19 @@ public class Simple {
         Team italy = new Team("Italy", 11, 14, 17, 4, 5, 4, 5, "451", "normal");
         italy.loadPlayers("src/data/italy.txt");
 
-        new Match(spain, italy);
+        new Match(spain, italy).playMatch();
+
+        Team spainCopy = new Team("Spain B", 9, 11, 14, 6, 3, 5, 2, "433", "normal");
+        spainCopy.loadPlayers("src/data/spain.txt");
+        Team italyCopy = new Team("Italy B", 11, 14, 17, 4, 5, 4, 5, "451", "normal");
+        italyCopy.loadPlayers("src/data/italy.txt");
+
+        List<Team> teams = new ArrayList<>();
+        teams.add(spain);
+        teams.add(italy);
+        teams.add(spainCopy);
+        teams.add(italyCopy);
+        League league = new League(teams);
+        league.printTable();
     }
 }
