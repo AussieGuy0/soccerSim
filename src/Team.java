@@ -21,6 +21,7 @@ public class Team {
     private final int secondHalfDefensiveShotOnGoal;
     private final String formation;
     private final String strategy;
+    private Stats stats;
 
     public Team(String name, int firstHalfattempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, String strategy) {
         this.firstHalfattempts = firstHalfattempts;
@@ -35,6 +36,7 @@ public class Team {
         this.name = name;
         players = new ArrayList<>();
         goalies = new ArrayList<>();
+        stats = new Stats();
     }
 
     public String getName() {
@@ -75,6 +77,10 @@ public class Team {
 
     public int getSecondHalfDefensiveShotOnGoal() {
         return secondHalfDefensiveShotOnGoal;
+    }
+
+    public Stats getStats() {
+        return stats;
     }
 
     public void loadPlayers(String s) {

@@ -24,7 +24,6 @@ public class Match {
      * @param awayTeam The team that has travelled to play.
      */
     public Match(Team homeTeam, Team awayTeam) {
-        System.out.println("Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
 
@@ -35,12 +34,15 @@ public class Match {
         homeTeamShotsTotal = 0;
         awayTeamAttemptsTotal = 0;
         awayTeamShotsTotal = 0;
-        firstHalf = true; //Used to determine which half is currently being played
         random = new Random();
 
-        playHalf();
-        playHalf();
+    }
 
+    public void playMatch() {
+        System.out.println("Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
+        firstHalf = true; //Used to determine which half is currently being played
+        playHalf();
+        playHalf();
         System.out.println("There's the final whistle!");
         System.out.println(homeTeam.getName() + " |     Teams     | " + awayTeam.getName());
         System.out.println("    " + homeTeamGoals + " |     Goals     | "  + awayTeamGoals);
@@ -134,5 +136,13 @@ public class Match {
                 System.out.println("Close miss by " + shooter.getName());
             }
         }
+    }
+
+    public int getHomeTeamGoals() {
+        return homeTeamGoals;
+    }
+
+    public int getAwayTeamGoals() {
+        return awayTeamGoals;
     }
 }

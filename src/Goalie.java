@@ -3,8 +3,8 @@
  */
 public class Goalie {
 
-    private String name;
-    private int rating;
+    private final String name;
+    private final int rating;
 
     public Goalie(String name, int rating) {
         this.name = name;
