@@ -18,3 +18,4 @@ De Rossi|97|10
 Barone|98|10
 Barzagli|99|10
 Oddo|100|10
+Buffon|-2

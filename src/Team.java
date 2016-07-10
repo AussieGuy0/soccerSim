@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Team {
 
-    //TODO: Add goalies
+    private final ArrayList<Goalie> goalies;
     private final ArrayList<Player> players;
     private final String name;
 
@@ -34,6 +34,7 @@ public class Team {
         this.strategy = strategy;
         this.name = name;
         players = new ArrayList<>();
+        goalies = new ArrayList<>();
     }
 
     public String getName() {
@@ -81,7 +82,11 @@ public class Team {
             BufferedReader reader = new BufferedReader(new FileReader(s));
             while (reader.ready()) {
                 String[] line = reader.readLine().split("\\|");
-                players.add(new Player(line[0], Integer.parseInt(line[1]), Integer.parseInt(line[2])));
+                if (line.length == 3) { //is player
+                    players.add(new Player(line[0], Integer.parseInt(line[1]), Integer.parseInt(line[2])));
+                } else { //is Goalie
+                    goalies.add(new Goalie(line[0], Integer.parseInt(line[1])));
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,5 +107,9 @@ public class Team {
         }
         System.err.println("Couldn't find player, returning first player");
         return players.get(0);
+    }
+
+    public Goalie getGoalie() {
+        return goalies.get(0);
     }
 }

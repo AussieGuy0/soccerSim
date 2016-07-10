@@ -93,7 +93,7 @@ public class Match {
             if (homeAttemptsSoFar < homeTeamAttempts) {
                 minute += 2;
                 if (random.nextInt(100) + 1 <= homeTeamSOGChance) {
-                    determineShot(homeTeam);
+                    determineShot(homeTeam, awayTeam.getGoalie());
                     homeTeamShotsTotal++;
                 }
                 homeAttemptsSoFar++;
@@ -102,7 +102,7 @@ public class Match {
             if (awayAttemptsSoFar < awayTeamAttempts) {
                 minute += 2;
                 if (random.nextInt(100) + 1 < awayTeamSOGChance) {
-                    determineShot(awayTeam);
+                    determineShot(awayTeam, homeTeam.getGoalie());
                     awayTeamShotsTotal++;
                 }
                 awayAttemptsSoFar++;
@@ -115,10 +115,11 @@ public class Match {
      *
      * @param team The team who is shooting
      */
-    private void determineShot(Team team) {
+    private void determineShot(Team team, Goalie goalie) {
         Player shooter = team.getShooter(random.nextInt(100) + 1);
         System.out.print(minute + "' ");
-        if (random.nextInt(10) + 1 >= shooter.getGoal()) {
+        int shotScore = (random.nextInt(10) + 1) + goalie.getRating();
+        if (shotScore >= shooter.getGoal()) {
             if (team.equals(homeTeam)) {
                 homeTeamGoals++;
             } else {
@@ -127,7 +128,11 @@ public class Match {
             System.out.println("Goal for " + team.getName() + "! What a shot by " + shooter.getName() + "!");
             System.out.println("The score is now: " + homeTeamGoals + " - " + awayTeamGoals);
         } else {
-            System.out.println("Close miss by " + shooter.getName());
+            if (shooter.getGoal() - shotScore >= Math.abs(goalie.getRating())) { //used to determine if goalie saved the shot
+                System.out.println("Shot by "+ shooter.getName() + " saved by " + goalie.getName() + "!");
+            } else {
+                System.out.println("Close miss by " + shooter.getName());
+            }
         }
     }
 }
