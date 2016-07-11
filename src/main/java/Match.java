@@ -1,7 +1,9 @@
+package main.java;
+
 import java.util.Random;
 
 /**
- * Match is class that is used to simulate a game between two teams.
+ * main.java.Match is class that is used to simulate a game between two teams.
  */
 public class Match {
 
@@ -39,7 +41,7 @@ public class Match {
     }
 
     public void playMatch() {
-        System.out.println("Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
+        System.out.println("main.java.Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
         firstHalf = true; //Used to determine which half is currently being played
         playHalf();
         playHalf();
@@ -48,6 +50,17 @@ public class Match {
         System.out.println("    " + homeTeamGoals + " |     Goals     | "  + awayTeamGoals);
         System.out.println("   " + homeTeamAttemptsTotal + " |   Attempts    | "  + awayTeamAttemptsTotal);
         System.out.println("    " + homeTeamShotsTotal + " | Shots on Goal | "  + awayTeamShotsTotal);
+
+        if (homeTeamGoals > awayTeamGoals) {
+            homeTeam.getStats().addWin(homeTeamGoals,awayTeamGoals);
+            awayTeam.getStats().addLoss(awayTeamGoals,homeTeamGoals);
+        } else if (awayTeamGoals > homeTeamGoals) {
+            homeTeam.getStats().addLoss(homeTeamGoals,awayTeamGoals);
+            awayTeam.getStats().addWin(awayTeamGoals,homeTeamGoals);
+        } else {
+            homeTeam.getStats().addDraw(homeTeamGoals,awayTeamGoals);
+            awayTeam.getStats().addDraw(awayTeamGoals,homeTeamGoals);
+        }
     }
 
     /**
@@ -120,8 +133,9 @@ public class Match {
     private void determineShot(Team team, Goalie goalie) {
         Player shooter = team.getShooter(random.nextInt(100) + 1);
         System.out.print(minute + "' ");
-        int shotScore = (random.nextInt(10) + 1) + goalie.getRating();
-        if (shotScore >= shooter.getGoal()) {
+        int generatedNumber = random.nextInt(10) + 1;
+        int shotScore = generatedNumber + goalie.getRating();
+        if (shotScore >= shooter.getGoal() || generatedNumber == 10) {
             if (team.equals(homeTeam)) {
                 homeTeamGoals++;
             } else {

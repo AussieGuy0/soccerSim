@@ -1,0 +1,20 @@
+Iniesta|52|4
+Puyol|74|6
+Xabi Alonso|83|6
+Torres|84|6
+Pedro|85|7
+Ramos|86|8
+Pique|87|8
+Jesus Navas|88|8
+Xavi|89|8
+Busquets|90|8
+Capdevila|91|9
+Marchena|92|10
+Fabergas|93|10
+Silva|94|10
+Mata|95|10
+Llorente|96|10
+Martinez|97|10
+Arbeloa|98|10
+Albiol|100|10
+Castilla|-2

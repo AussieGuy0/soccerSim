@@ -1,3 +1,5 @@
+package main.java;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -90,7 +92,7 @@ public class Team {
                 String[] line = reader.readLine().split("\\|");
                 if (line.length == 3) { //is player
                     players.add(new Player(line[0], Integer.parseInt(line[1]), Integer.parseInt(line[2])));
-                } else { //is Goalie
+                } else { //is main.java.Goalie
                     goalies.add(new Goalie(line[0], Integer.parseInt(line[1])));
                 }
             }
@@ -100,10 +102,10 @@ public class Team {
     }
 
     /**
-     * Returns the shooter based on generated value from Match.
+     * Returns the shooter based on generated value from main.java.Match.
      *
      * @param value The randomly generated value.
-     * @return A Player who is considered the shooter.
+     * @return A main.java.Player who is considered the shooter.
      */
     public Player getShooter(int value) {
         for (Player player : players) {

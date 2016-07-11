@@ -1,3 +1,5 @@
+package main.java;
+
 /**
  * Created by anthony on 10/07/16.
  */
@@ -31,5 +33,13 @@ public class Stats {
 
     public int getPoints() {
         return points;
+    }
+
+    public int getGoalsScored() {
+        return  goalsScored;
+    }
+
+    public int getGoalsAgainst() {
+        return goalsAgainst;
     }
 }

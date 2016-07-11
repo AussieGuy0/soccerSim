@@ -1,5 +1,9 @@
+package main.java;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by anthony on 10/07/16.
@@ -9,11 +13,13 @@ public class League {
 
     private List<Team> teams;
     private List<List<Match>> schedule;
+    private int roundNumber;
 
     public League(List<Team> teams) {
         this.teams = teams;
         schedule = new ArrayList<>();
         scheduleRounds();
+        roundNumber = 0;
     }
 
     public void scheduleRounds() {
@@ -23,7 +29,7 @@ public class League {
         List<Match> thirdRound = new ArrayList<>();
         /*
         for (int i = 0; i < teams.size(); i++) {
-            Team firstTeam = teams.get(i);
+            main.java.Team firstTeam = teams.get(i);
             int count = 0;
             for (int j = i+1; j < teams.size(); j++) {
                 if (count =)
@@ -42,6 +48,7 @@ public class League {
     }
 
     public void printTable() {
+        System.out.println();
         System.out.println("Pos. | Name | GF | GA | Points");
         List<Team> tableTeams = new ArrayList<>(teams);
         int size = tableTeams.size();
@@ -54,12 +61,40 @@ public class League {
                if (team.getStats().getPoints() >= max)  {
                    largestTeam = team;
                    found = count;
+                   max = team.getStats().getPoints();
                }
                 count++;
             }
-            System.out.println(i+1 + " | " + largestTeam.getName() + " | - | - | " + largestTeam.getStats().getPoints());
+            System.out.println(i+1 + " | " + largestTeam.getName() + " | " + largestTeam.getStats().getGoalsScored() + " | "+ largestTeam.getStats().getGoalsAgainst() + " | " + largestTeam.getStats().getPoints());
             tableTeams.remove(found);
 
         }
     }
+
+    public void playRound() {
+        ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        for (int i = 0; i < schedule.get(roundNumber).size(); i++) {
+            new MatchThread(schedule.get(roundNumber).get(i)).run();
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        printTable();
+        roundNumber++;
+    }
+
+    private class MatchThread extends  Thread {
+        private Match match;
+
+        public MatchThread(Match match) {
+           this.match = match;
+        }
+        @Override
+        public void run() {
+            match.playMatch();
+        }
+    }
+
 }

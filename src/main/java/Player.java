@@ -1,5 +1,7 @@
+package main.java;
+
 /**
- * Player is a class that contains information about a player.
+ * main.java.Player is a class that contains information about a player.
  */
 public class Player {
 
