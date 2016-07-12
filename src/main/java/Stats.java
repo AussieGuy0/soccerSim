@@ -10,12 +10,14 @@ public class Stats {
     private int draws = 0;
     private int losses = 0;
     private int points = 0;
+    private int played = 0;
 
     public void addWin(int goalsScored, int goalsAgainst) {
         this.goalsScored += goalsScored;
         this.goalsAgainst += goalsAgainst;
         wins++;
         points += 3;
+        played++;
     }
 
     public void addDraw(int goalsScored, int goalsAgainst) {
@@ -23,12 +25,14 @@ public class Stats {
         this.goalsAgainst += goalsAgainst;
         draws++;
         points += 1;
+        played++;
     }
 
     public void addLoss(int goalsScored, int goalsAgainst) {
         this.goalsScored += goalsScored;
         this.goalsAgainst += goalsAgainst;
         losses++;
+        played++;
     }
 
     public int getPoints() {
@@ -41,5 +45,9 @@ public class Stats {
 
     public int getGoalsAgainst() {
         return goalsAgainst;
+    }
+
+    public int getPlayed() {
+        return played;
     }
 }

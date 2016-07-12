@@ -23,7 +23,7 @@ public class Team {
     private final int secondHalfDefensiveShotOnGoal;
     private final String formation;
     private final String strategy;
-    private Stats stats;
+    private final Stats stats;
 
     public Team(String name, int firstHalfattempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, String strategy) {
         this.firstHalfattempts = firstHalfattempts;
