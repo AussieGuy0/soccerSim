@@ -152,11 +152,4 @@ public class Match {
         }
     }
 
-    public int getHomeTeamGoals() {
-        return homeTeamGoals;
-    }
-
-    public int getAwayTeamGoals() {
-        return awayTeamGoals;
-    }
 }

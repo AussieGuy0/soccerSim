@@ -22,34 +22,31 @@ public class League {
         roundNumber = 0;
     }
 
-    public void scheduleRounds() {
-        //todo: not hardcode number of rounds
-        List<Match> firstRound = new ArrayList<>();
-        List<Match> secondRound = new ArrayList<>();
-        List<Match> thirdRound = new ArrayList<>();
-        /*
-        for (int i = 0; i < teams.size(); i++) {
-            main.java.Team firstTeam = teams.get(i);
-            int count = 0;
-            for (int j = i+1; j < teams.size(); j++) {
-                if (count =)
+    //TODO: Fix this disgusting mess of a method
+    private void scheduleRounds() {
+        int numOfRounds = teams.size() - 1;
+        int count = 1;
+        for (int i = 0; i < numOfRounds; i++) {
+            List<Match> round = new ArrayList<>();
+            for (int j = 0; j < teams.size(); j++) {
+                if (j+count >= teams.size()) {
+                    break;
+                }
+               round.add(new Match(teams.get(j),teams.get(j+count)));
+                if (count == 1) {
+                    j++;
+                } else if (count == 3) {
+                    count = 1;
+                }
             }
+            schedule.add(round);
+            count++;
         }
-        */
-        firstRound.add(new Match(teams.get(0),teams.get(1)));
-        firstRound.add(new Match(teams.get(2),teams.get(3)));
-        secondRound.add(new Match(teams.get(0),teams.get(2)));
-        secondRound.add(new Match(teams.get(1),teams.get(3)));
-        thirdRound.add(new Match(teams.get(0),teams.get(3)));
-        thirdRound.add(new Match(teams.get(2),teams.get(1)));
-        schedule.add(firstRound);
-        schedule.add(secondRound);
-        schedule.add(thirdRound);
     }
 
     public void printTable() {
         System.out.println();
-        System.out.println("Pos. | Name | GF | GA | Points");
+        System.out.println("Pos | Name | GF | GA | Points | Played");
         List<Team> tableTeams = new ArrayList<>(teams);
         int size = tableTeams.size();
         for (int i = 0; i < size; i++) {
@@ -65,7 +62,9 @@ public class League {
                }
                 count++;
             }
-            System.out.println(i+1 + " | " + largestTeam.getName() + " | " + largestTeam.getStats().getGoalsScored() + " | "+ largestTeam.getStats().getGoalsAgainst() + " | " + largestTeam.getStats().getPoints());
+            Stats teamStats = largestTeam.getStats();
+            System.out.println(i+1 + "   | " + largestTeam.getName() + " | " + teamStats.getGoalsScored() + " " +
+                    "| "+ teamStats.getGoalsAgainst() + " | " + teamStats.getPoints() + " | "+teamStats.getPlayed());
             tableTeams.remove(found);
 
         }
@@ -74,7 +73,7 @@ public class League {
     public void playRound() {
         ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         for (int i = 0; i < schedule.get(roundNumber).size(); i++) {
-            new MatchThread(schedule.get(roundNumber).get(i)).run();
+            pool.execute(new MatchThread(schedule.get(roundNumber).get(i)));
         }
         try {
             Thread.sleep(100);
@@ -83,10 +82,11 @@ public class League {
         }
         printTable();
         roundNumber++;
+        pool.shutdown();
     }
 
     private class MatchThread extends  Thread {
-        private Match match;
+        private final Match match;
 
         public MatchThread(Match match) {
            this.match = match;
