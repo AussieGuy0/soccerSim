@@ -13,9 +13,9 @@ public class Simple {
 
         //new main.java.Match(spain, italy).playMatch();
 
-        Team spainCopy = new Team("Spain B", 9, 11, 14, 6, 3, 5, 2, "433", "normal");
+        Team spainCopy = new Team("SpainB", 9, 11, 14, 6, 3, 5, 2, "433", "normal");
         spainCopy.loadPlayers("src/main/resources/spain.txt");
-        Team italyCopy = new Team("Italy B", 11, 14, 17, 4, 5, 4, 5, "451", "normal");
+        Team italyCopy = new Team("ItalyB", 11, 14, 17, 4, 5, 4, 5, "451", "normal");
         italyCopy.loadPlayers("src/main/resources/italy.txt");
 
         List<Team> teams = new ArrayList<>();

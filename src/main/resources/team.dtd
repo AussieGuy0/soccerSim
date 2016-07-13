@@ -1,15 +1,12 @@
-<!DOCTYPE team
-        [
-                <!ELEMENT note (name, firstHalfAttempts, secondHalfAttempts, goalRating, firstHalfDefensiveAttempts, secondHalfDefensiveAttempts,
-                        firstHalfDefensiveShotsOnGoal, secondHalfDefensiveShotsOnGoal, formation, strategy)>
-                <!ELEMENT name (#PCDATA)>
-                <!ELEMENT firstHalfAttempts (#PCDATA)>
-                <!ELEMENT secondHalfAttempts (#PCDATA)>
-                <!ELEMENT goalRating (#PCDATA)>
-                <!ELEMENT firstHalfDefensiveAttempts (#PCDATA)>
-                <!ELEMENT secondHalfDefensiveAttempts (#PCDATA)>
-                <!ELEMENT firstHalfDefensiveShotsOnGoal (#PCDATA)>
-                <!ELEMENT secondHalfDefensiveShotsOnGoal (#PCDATA)>
-                <!ELEMENT formation (#PCDATA)>
-                <!ELEMENT strategy (#PCDATA)>
-                ]>
+<!ELEMENT team (name, firstHalfAttempts, secondHalfAttempts, goalRating, firstHalfDefensiveAttempts, secondHalfDefensiveAttempts,
+        firstHalfDefensiveShotsOnGoal, secondHalfDefensiveShotsOnGoal, formation, strategy)>
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT firstHalfAttempts (#PCDATA)>
+        <!ELEMENT secondHalfAttempts (#PCDATA)>
+        <!ELEMENT goalRating (#PCDATA)>
+        <!ELEMENT firstHalfDefensiveAttempts (#PCDATA)>
+        <!ELEMENT secondHalfDefensiveAttempts (#PCDATA)>
+        <!ELEMENT firstHalfDefensiveShotsOnGoal (#PCDATA)>
+        <!ELEMENT secondHalfDefensiveShotsOnGoal (#PCDATA)>
+        <!ELEMENT formation (#PCDATA)>
+        <!ELEMENT strategy (#PCDATA)>
