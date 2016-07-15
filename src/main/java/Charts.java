@@ -21,13 +21,11 @@ public class Charts {
     }
 
 
-
-
     private class attemptsAndSOGModifier {
-        int homeAttemptModifier;
-        int awayAttemptModifier;
-        int homeSOGModifier;
-        int awaySOGModifier;
+        final int homeAttemptModifier;
+        final int awayAttemptModifier;
+        final int homeSOGModifier;
+        final int awaySOGModifier;
 
         public attemptsAndSOGModifier(int homeAttemptModifier, int awayAttemptModifier, int homeSOGModifier, int awaySOGModifier) {
             this.homeAttemptModifier = homeAttemptModifier;

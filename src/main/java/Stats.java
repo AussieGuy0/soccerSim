@@ -40,7 +40,7 @@ public class Stats {
     }
 
     public int getGoalsScored() {
-        return  goalsScored;
+        return goalsScored;
     }
 
     public int getGoalsAgainst() {

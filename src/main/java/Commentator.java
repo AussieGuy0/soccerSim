@@ -18,18 +18,18 @@ public class Commentator {
     }
 
     public static String announceEndOfDrawnMatch(Team homeTeam, Team awayTeam, int homeScore, int awayScore) {
-       return "";
-    }
-
-    public  static String announceYellowCard(Team affectedTeam, Player yellowCardedPlayer) {
-       return "";
-    }
-
-    public  static String announceRedCard(Team affectedTeam, Player redCardedPlayer) {
         return "";
     }
 
-    public  static String announceInjury(Team affectedTeam, Player injuredPlayer) {
+    public static String announceYellowCard(Team affectedTeam, Player yellowCardedPlayer) {
+        return "";
+    }
+
+    public static String announceRedCard(Team affectedTeam, Player redCardedPlayer) {
+        return "";
+    }
+
+    public static String announceInjury(Team affectedTeam, Player injuredPlayer) {
         return "";
     }
 }

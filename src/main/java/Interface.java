@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 public class Interface {
 
-    Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in);
 
     public void displayMainMenu() {
         System.out.println("1. Create Friendly Game");
@@ -19,14 +19,18 @@ public class Interface {
             input = in.nextInt();
         } while (input < 1 && input > 5);
 
-        switch(input) {
-            case 1: displayFriendlyGameMenu();
+        switch (input) {
+            case 1:
+                displayFriendlyGameMenu();
                 break;
-            case 2: displayLeagueMenu();
+            case 2:
+                displayLeagueMenu();
                 break;
-            case 3: displayLoadMenu();
+            case 3:
+                displayLoadMenu();
                 break;
-            case 4: System.exit(0);
+            case 4:
+                System.exit(0);
         }
     }
 

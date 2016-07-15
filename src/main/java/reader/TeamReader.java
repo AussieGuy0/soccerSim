@@ -13,8 +13,9 @@ import java.io.IOException;
 /**
  * Created by anthony on 13/07/16.
  */
+//todo: make work
 public class TeamReader {
-    File file;
+    private final File file;
 
     public TeamReader(String fileName) {
         this.file = new File(fileName);
@@ -32,18 +33,23 @@ public class TeamReader {
             builder = factory.newDocumentBuilder();
             document = builder.parse(file);
         } catch (ParserConfigurationException e) {
-            throw new IllegalStateException("Unable to create document builder",e);
+            throw new IllegalStateException("Unable to create document builder", e);
         } catch (SAXException e) {
-           throw new IllegalStateException(e);
+            throw new IllegalStateException(e);
         } catch (IOException e) {
-            throw new IllegalStateException("Couldn't open file",e);
+            throw new IllegalStateException("Couldn't open file", e);
         }
         document.getDocumentElement().normalize();
-        NodeList nodeList =  document.getElementsByTagName("team");
+
+        Element root = document.getDocumentElement();
+
+        NodeList nodeList = document.getElementsByTagName("team");
 
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
             Element element = (Element) node;
+            String bla = element.getAttribute("");
+            System.out.println(bla);
         }
 
     }

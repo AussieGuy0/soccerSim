@@ -47,19 +47,19 @@ public class Match {
         playHalf();
         System.out.println("There's the final whistle!");
         System.out.println(homeTeam.getName() + " |     Teams     | " + awayTeam.getName());
-        System.out.println("    " + homeTeamGoals + " |     Goals     | "  + awayTeamGoals);
-        System.out.println("   " + homeTeamAttemptsTotal + " |   Attempts    | "  + awayTeamAttemptsTotal);
-        System.out.println("    " + homeTeamShotsTotal + " | Shots on Goal | "  + awayTeamShotsTotal);
+        System.out.println("    " + homeTeamGoals + " |     Goals     | " + awayTeamGoals);
+        System.out.println("   " + homeTeamAttemptsTotal + " |   Attempts    | " + awayTeamAttemptsTotal);
+        System.out.println("    " + homeTeamShotsTotal + " | Shots on Goal | " + awayTeamShotsTotal);
 
         if (homeTeamGoals > awayTeamGoals) {
-            homeTeam.getStats().addWin(homeTeamGoals,awayTeamGoals);
-            awayTeam.getStats().addLoss(awayTeamGoals,homeTeamGoals);
+            homeTeam.getStats().addWin(homeTeamGoals, awayTeamGoals);
+            awayTeam.getStats().addLoss(awayTeamGoals, homeTeamGoals);
         } else if (awayTeamGoals > homeTeamGoals) {
-            homeTeam.getStats().addLoss(homeTeamGoals,awayTeamGoals);
-            awayTeam.getStats().addWin(awayTeamGoals,homeTeamGoals);
+            homeTeam.getStats().addLoss(homeTeamGoals, awayTeamGoals);
+            awayTeam.getStats().addWin(awayTeamGoals, homeTeamGoals);
         } else {
-            homeTeam.getStats().addDraw(homeTeamGoals,awayTeamGoals);
-            awayTeam.getStats().addDraw(awayTeamGoals,homeTeamGoals);
+            homeTeam.getStats().addDraw(homeTeamGoals, awayTeamGoals);
+            awayTeam.getStats().addDraw(awayTeamGoals, homeTeamGoals);
         }
     }
 
@@ -145,7 +145,7 @@ public class Match {
             System.out.println("The score is now: " + homeTeamGoals + " - " + awayTeamGoals);
         } else {
             if (shooter.getGoal() - shotScore >= Math.abs(goalie.getRating())) { //used to determine if goalie saved the shot
-                System.out.println("Shot by "+ shooter.getName() + " saved by " + goalie.getName() + "!");
+                System.out.println("Shot by " + shooter.getName() + " saved by " + goalie.getName() + "!");
             } else {
                 System.out.println("Close miss by " + shooter.getName());
             }

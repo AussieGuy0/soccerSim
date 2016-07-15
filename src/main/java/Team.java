@@ -25,7 +25,7 @@ public class Team {
     private final String strategy;
     private final Stats stats;
 
-    public Team(String name, int firstHalfattempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, String strategy) {
+    public Team(String name, int firstHalfattempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, @SuppressWarnings("SameParameterValue") String strategy) {
         this.firstHalfattempts = firstHalfattempts;
         this.secondHalfattempts = secondHalfAttempts;
         this.shotsGoal = shotsGoal;
@@ -92,7 +92,7 @@ public class Team {
                 String[] line = reader.readLine().split("\\|");
                 if (line.length == 3) { //is player
                     players.add(new Player(line[0], Integer.parseInt(line[1]), Integer.parseInt(line[2])));
-                } else { //is main.java.Goalie
+                } else { //is Goalie
                     goalies.add(new Goalie(line[0], Integer.parseInt(line[1])));
                 }
             }
