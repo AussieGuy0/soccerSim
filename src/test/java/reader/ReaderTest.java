@@ -13,6 +13,9 @@ public class ReaderTest {
         TeamReader teamReader = new TeamReader("src/main/resources/spain.xml");
         teamReader.read();
 
+        teamReader = new TeamReader("src/main/resources/test.xml");
+        teamReader.read();
+
     }
 
 }
