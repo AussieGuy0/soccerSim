@@ -41,7 +41,7 @@ public class Match {
     }
 
     public void playMatch() {
-        System.out.println("main.java.Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
+        System.out.println("Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
         firstHalf = true; //Used to determine which half is currently being played
         playHalf();
         playHalf();
@@ -141,13 +141,13 @@ public class Match {
             } else {
                 awayTeamGoals++;
             }
-            System.out.println("Goal for " + team.getName() + "! What a shot by " + shooter.getName() + "!");
-            System.out.println("The score is now: " + homeTeamGoals + " - " + awayTeamGoals);
+            System.out.println(Commentator.announceGoal(shooter));
+            System.out.println("The score is now "+ homeTeam.getName()  + ": " + homeTeamGoals + ",  "+awayTeam.getName() +": " + awayTeamGoals);
         } else {
             if (shooter.getGoal() - shotScore >= Math.abs(goalie.getRating())) { //used to determine if goalie saved the shot
-                System.out.println("Shot by " + shooter.getName() + " saved by " + goalie.getName() + "!");
+                System.out.println(Commentator.announceSave(shooter,goalie));
             } else {
-                System.out.println("Close miss by " + shooter.getName());
+                System.out.println(Commentator.announceMiss(shooter));
             }
         }
     }
