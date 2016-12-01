@@ -1,4 +1,4 @@
-package main.java;
+package me.anthonybruno.soccerSim;
 
 import java.io.BufferedReader;
 import java.io.File;

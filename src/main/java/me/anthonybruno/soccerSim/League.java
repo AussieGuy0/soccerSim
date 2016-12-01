@@ -1,4 +1,4 @@
-package main.java;
+package me.anthonybruno.soccerSim;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package main.java;
+package me.anthonybruno.soccerSim;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -102,10 +102,10 @@ public class Team {
     }
 
     /**
-     * Returns the shooter based on generated value from main.java.Match.
+     * Returns the shooter based on generated value from Match.
      *
      * @param value The randomly generated value.
-     * @return A main.java.Player who is considered the shooter.
+     * @return A Player who is considered the shooter.
      */
     public Player getShooter(int value) {
         for (Player player : players) {

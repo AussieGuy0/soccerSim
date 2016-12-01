@@ -1,7 +1,7 @@
-package main.java;
+package me.anthonybruno.soccerSim;
 
 /**
- * main.java.Player is a class that contains information about a player.
+ * Player is a class that contains information about a player.
  */
 public class Player {
 

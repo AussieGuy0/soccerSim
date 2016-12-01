@@ -1,9 +1,9 @@
-package main.java;
+package me.anthonybruno.soccerSim;
 
 import java.util.Random;
 
 /**
- * main.java.Match is class that is used to simulate a game between two teams.
+ * Match is class that is used to simulate a game between two teams.
  */
 public class Match {
 

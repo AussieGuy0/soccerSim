@@ -1,4 +1,4 @@
-package main.java;
+package me.anthonybruno.soccerSim;
 
 /**
  * Created by anthony on 10/07/16.
