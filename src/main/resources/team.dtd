@@ -1,5 +1,5 @@
 <!ELEMENT team (name, firstHalfAttempts, secondHalfAttempts, goalRating, firstHalfDefensiveAttempts, secondHalfDefensiveAttempts,
-        firstHalfDefensiveShotsOnGoal, secondHalfDefensiveShotsOnGoal, formation, strategy)>
+        firstHalfDefensiveShotsOnGoal, secondHalfDefensiveShotsOnGoal, formation, strategy, players)>
         <!ELEMENT name (#PCDATA)>
         <!ELEMENT firstHalfAttempts (#PCDATA)>
         <!ELEMENT secondHalfAttempts (#PCDATA)>
@@ -10,3 +10,11 @@
         <!ELEMENT secondHalfDefensiveShotsOnGoal (#PCDATA)>
         <!ELEMENT formation (#PCDATA)>
         <!ELEMENT strategy (#PCDATA)>
+        <!ELEMENT players (player+)>
+        <!ELEMENT player (playerName, shotRange, goal, injury, multiplier)>
+            <!ELEMENT playerName (#PCDATA)>
+            <!ELEMENT shotRange (#PCDATA)>
+            <!ELEMENT goal (#PCDATA)>
+            <!ELEMENT injury (#PCDATA)>
+            <!ELEMENT multiplier (#PCDATA)>
+
