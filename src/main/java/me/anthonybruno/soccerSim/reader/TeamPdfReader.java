@@ -7,21 +7,22 @@ import org.apache.pdfbox.text.PDFTextStripperByArea;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 
 
 /**
  * Created by anthony on 13/07/16.
  */
 //todo: make work
-public class TeamReader {
+public class TeamPdfReader {
+    private static final Rectangle2D.Double firstTeamRegion = new Rectangle2D.Double(0, 0, 330, 550);
+    private static final Rectangle2D.Double secondTeamRegion = new Rectangle2D.Double(350, 550, 330, 550);
     private final File file;
 
-    public TeamReader(String fileName) {
+    public TeamPdfReader(String fileName) {
         this.file = new File(fileName);
     }
 
-    public TeamReader(File file) {
+    public TeamPdfReader(File file) {
         this.file = file;
     }
 
@@ -41,26 +42,31 @@ public class TeamReader {
 //        }
 //    }
 
-    public String read() { //Using PDFBox
+    public void readAllTeamsToFiles() { //Using PDFBox
         try {
             PDFParser parser = new PDFParser(new RandomAccessFile(file, "r"));
             parser.parse();
             PDFTextStripperByArea pdfTextStripperByArea = new PDFTextStripperByArea();
-            pdfTextStripperByArea.addRegion("First", new Rectangle2D.Double(0, 0, 330, 550));
-            pdfTextStripperByArea.extractRegions(parser.getPDDocument().getPage(0));
-            return pdfTextStripperByArea.getTextForRegion("First");
+            pdfTextStripperByArea.addRegion("First", firstTeamRegion);
+            pdfTextStripperByArea.addRegion("Second", secondTeamRegion);
+            for (int i = 0; i < parser.getPDDocument().getNumberOfPages(); i++) {
+                pdfTextStripperByArea.extractRegions(parser.getPDDocument().getPage(i));
+                writeTeamToFile(pdfTextStripperByArea.getTextForRegion("First"), "teams");
+                writeTeamToFile(pdfTextStripperByArea.getTextForRegion("Second"), "teams");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
-    public String writeTeamToFile(String teamExtractedFromPDf) {
+    public void writeTeamToFile(String teamExtractedFromPDf, String saveDirectory) {
         XmlWriter xmlWriter = new XmlWriter("UTF-8", "team.dtd");
         String text = teamExtractedFromPDf;
 
         xmlWriter.createOpenTag("team");
-        xmlWriter.createTagWithValue("name", text.substring(0,text.indexOf(" ")));
+        String name = text.substring(0 ,text.indexOf(" "));
+        xmlWriter.createTagWithValue("name", name);
 
         for (int i = 0; i < 3; i++) { //skipping stuff we don't care about
             text = moveToNextLine(text);
@@ -107,6 +113,17 @@ public class TeamReader {
 
         text = moveToNextLine(text);
 
+
+        parseGoalies(xmlWriter, text);
+        xmlWriter.createCloseTag("players");
+
+        xmlWriter.createCloseTag("team");
+
+        xmlWriter.writeToFile(new File(name + ".xml"));
+
+    }
+
+    private void parseGoalies(XmlWriter xmlWriter, String text) {
         while (!text.isEmpty()) {
             xmlWriter.createOpenTag("goalie");
             String playerName = "";
@@ -124,11 +141,6 @@ public class TeamReader {
             text = moveToNextLine(text);
             xmlWriter.createCloseTag("goalie");
         }
-        xmlWriter.createCloseTag("players");
-
-        xmlWriter.createCloseTag("team");
-
-        return xmlWriter.toString();
     }
 
     private boolean isNumeric(char c) {
@@ -202,9 +214,8 @@ public class TeamReader {
     }
 
     public static void main(String[] args) {
-        TeamReader teamReader = new TeamReader("src/main/resources/ruleFiles/Cards1.pdf");
-        String parsedTeam = teamReader.read();
-        System.out.println(teamReader.writeTeamToFile(parsedTeam));
+        TeamPdfReader teamPdfReader = new TeamPdfReader("src/main/resources/ruleFiles/Cards1.pdf");
+        teamPdfReader.readAllTeamsToFiles();
 
     }
 }
