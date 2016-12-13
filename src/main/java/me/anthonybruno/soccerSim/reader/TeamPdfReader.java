@@ -14,8 +14,8 @@ import java.io.IOException;
  */
 //todo: make work
 public class TeamPdfReader {
-    private static final Rectangle2D.Double firstTeamRegion = new Rectangle2D.Double(0, 0, 330, 550);
-    private static final Rectangle2D.Double secondTeamRegion = new Rectangle2D.Double(350, 550, 330, 550);
+    private static final Rectangle2D.Double firstTeamFirstPageRegion = new Rectangle2D.Double(0, 0, 330, 550);
+    private static final Rectangle2D.Double secondTeamFirstPageRegion = new Rectangle2D.Double(350, 0, 350, 550);
     private final File file;
 
     public TeamPdfReader(String fileName) {
@@ -47,8 +47,8 @@ public class TeamPdfReader {
             PDFParser parser = new PDFParser(new RandomAccessFile(file, "r"));
             parser.parse();
             PDFTextStripperByArea pdfTextStripperByArea = new PDFTextStripperByArea();
-            pdfTextStripperByArea.addRegion("First", firstTeamRegion);
-            pdfTextStripperByArea.addRegion("Second", secondTeamRegion);
+            pdfTextStripperByArea.addRegion("First", firstTeamFirstPageRegion);
+            pdfTextStripperByArea.addRegion("Second", secondTeamFirstPageRegion);
             for (int i = 0; i < parser.getPDDocument().getNumberOfPages(); i++) {
                 pdfTextStripperByArea.extractRegions(parser.getPDDocument().getPage(i));
                 writeTeamToFile(pdfTextStripperByArea.getTextForRegion("First"), "teams");
@@ -61,11 +61,14 @@ public class TeamPdfReader {
     }
 
     public void writeTeamToFile(String teamExtractedFromPDf, String saveDirectory) {
-        XmlWriter xmlWriter = new XmlWriter("UTF-8", "team.dtd");
+        if (teamExtractedFromPDf.isEmpty() || !teamExtractedFromPDf.contains(" ")) {
+            return; //reached a blank page
+        }
+        XmlWriter xmlWriter = new XmlWriter("UTF-8", "teams/team.dtd");
         String text = teamExtractedFromPDf;
 
         xmlWriter.createOpenTag("team");
-        String name = text.substring(0 ,text.indexOf(" "));
+        String name = text.substring(0, text.indexOf(" "));
         xmlWriter.createTagWithValue("name", name);
 
         for (int i = 0; i < 3; i++) { //skipping stuff we don't care about
@@ -73,7 +76,7 @@ public class TeamPdfReader {
         }
 
         text = text.substring(text.indexOf(':') + 2);
-        String firstHalfAttempts =  text.substring(0, text.indexOf(' '));
+        String firstHalfAttempts = text.substring(0, text.indexOf(' '));
         text = text.substring(text.indexOf(' ') + 1);
         String secondHalfAttempts = text.substring(0, text.indexOf('\n'));
         text = moveToNextLine(text);
@@ -91,20 +94,23 @@ public class TeamPdfReader {
         String secondHalfSOG = defensiveSOG[2];
 
 
-
-
         xmlWriter.createTagWithValue("formation", text.substring(text.indexOf(':') + 2, text.indexOf('\n')));
         text = moveToNextLine(text);
 
         text = text.substring(text.indexOf(':') + 2);
 
-        xmlWriter.createTagWithValue("strategy", text.substring(0, text.indexOf(' ')));
+        if (text.indexOf(' ') < text.indexOf('\n')) {
+            xmlWriter.createTagWithValue("strategy", text.substring(0, text.indexOf(' '))); //team has fair play score
+        } else {
+            xmlWriter.createTagWithValue("strategy", text.substring(0, text.indexOf("\n")));
+        }
+
+        text = moveToNextLine(text);
         text = moveToNextLine(text);
 
-        parseHalfStats(xmlWriter, "firstHalf", firstHalfAttempts, firstHalfDefensiveAttempts, firstHalfSOG);
-        parseHalfStats(xmlWriter, "secondHalf", secondHalfAttempts, secondHalfDefensiveAttempts, secondHalfSOG);
+        parseHalfStats(xmlWriter, "halfStats", firstHalfAttempts, firstHalfDefensiveAttempts, firstHalfSOG);
+        parseHalfStats(xmlWriter, "halfStats", secondHalfAttempts, secondHalfDefensiveAttempts, secondHalfSOG);
 
-        text = moveToNextLine(text);
         xmlWriter.createOpenTag("players");
 
         while (!text.startsWith("Goalies")) {
@@ -119,7 +125,17 @@ public class TeamPdfReader {
 
         xmlWriter.createCloseTag("team");
 
-        xmlWriter.writeToFile(new File(name + ".xml"));
+        File saveDir = new File(saveDirectory);
+        try {
+            saveDir.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (!saveDir.exists()) {
+            file.mkdir();
+        }
+
+        xmlWriter.writeToFile(new File("src/main/resources/teams/" + name + ".xml"));
 
     }
 
@@ -174,13 +190,13 @@ public class TeamPdfReader {
 
     private String parsePlayerName(XmlWriter xmlWriter, String text) {
         if (isNumeric(text.charAt(text.indexOf(' ') + 1))) {
-            return parsePlayerAttribute(xmlWriter, "name", text); //Player has single name
+            return parsePlayerAttribute(xmlWriter, "playerName", text); //Player has single name
         } else {
             String playerName = text.substring(0, text.indexOf(' '));
             text = text.substring(text.indexOf(' ') + 1);
             playerName += ' ' + text.substring(0, text.indexOf(' '));
             text = text.substring(text.indexOf(' ') + 1);
-            xmlWriter.createTagWithValue("name", playerName);
+            xmlWriter.createTagWithValue("playerName", playerName);
             return text;
         }
     }
@@ -198,7 +214,7 @@ public class TeamPdfReader {
         text = text.substring(text.indexOf(' ') + 1);
         String secondHalf = text.substring(0, text.indexOf('\n'));
         text = moveToNextLine(text);
-        return new String[] {text, firstHalf, secondHalf};
+        return new String[]{text, firstHalf, secondHalf};
     }
 
     private void parseHalfStats(XmlWriter xmlWriter, String halfName, String attempts, String defensiveAttempts, String defensiveShotsOnGoal) {
