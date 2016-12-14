@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="team">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="goalRating" type="xs:string"/>
+                <xs:element name="formation" type="xs:string"/>
+                <xs:element name="strategy" type="xs:string"/>
+                <xs:element maxOccurs="2" ref="halfStats"/>
+                <xs:element ref="players"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="halfStats">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="attempts" type="xs:string"/>
+                <xs:element name="defensiveAttempts" type="xs:string"/>
+                <xs:element name="defensiveShotsOnGoal" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="players">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="player"/>
+                <xs:element maxOccurs="unbounded" ref="goalie"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="player">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="shotRange" type="xs:string"/>
+                <xs:element name="goal" type="xs:string"/>
+                <xs:element name="injury" type="xs:string"/>
+                <xs:element name="multiplier" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="goalie">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="rating" type="xs:string"/>
+                <xs:element name="injury" type="xs:string"/>
+                <xs:element name="multiplier" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

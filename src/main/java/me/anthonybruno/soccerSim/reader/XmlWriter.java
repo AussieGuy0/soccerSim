@@ -14,8 +14,8 @@ public class XmlWriter {
     private int indentation = 0;
     private static final char indentationChar = '\t';
 
-    public XmlWriter(String encoding, String dtd) {
-        stringBuilder = new StringBuilder(setupXml(encoding, dtd));
+    public XmlWriter(String encoding, String schema) {
+        stringBuilder = new StringBuilder(setupXml(encoding, schema));
     }
 
     public void createTagWithValue(String tag, String value) {

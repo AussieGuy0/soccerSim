@@ -64,8 +64,12 @@ public class TeamPdfReader {
         if (teamExtractedFromPDf.isEmpty() || !teamExtractedFromPDf.contains(" ")) {
             return; //reached a blank page
         }
-        XmlWriter xmlWriter = new XmlWriter("UTF-8", "teams/team.dtd");
+        XmlWriter xmlWriter = new XmlWriter("UTF-8", "team.xsd");
         String text = teamExtractedFromPDf;
+
+        if (text.indexOf('\n') < text.indexOf(' ')) {
+            text = text.substring(text.indexOf('\n') + 1);
+        }
 
         xmlWriter.createOpenTag("team");
         String name = text.substring(0, text.indexOf(" "));
@@ -149,6 +153,7 @@ public class TeamPdfReader {
             } while (!isNumeric(text.substring(0, text.indexOf(' '))));
             xmlWriter.createTagWithValue("name", playerName);
 
+            xmlWriter.createTagWithValue("rating", text.substring(0, text.indexOf(' ')));
             text = text.substring(text.indexOf(' ') + 1);
             text = text.substring(text.indexOf(' ') + 1);
 
@@ -190,13 +195,13 @@ public class TeamPdfReader {
 
     private String parsePlayerName(XmlWriter xmlWriter, String text) {
         if (isNumeric(text.charAt(text.indexOf(' ') + 1))) {
-            return parsePlayerAttribute(xmlWriter, "playerName", text); //Player has single name
+            return parsePlayerAttribute(xmlWriter, "name", text); //Player has single name
         } else {
             String playerName = text.substring(0, text.indexOf(' '));
             text = text.substring(text.indexOf(' ') + 1);
             playerName += ' ' + text.substring(0, text.indexOf(' '));
             text = text.substring(text.indexOf(' ') + 1);
-            xmlWriter.createTagWithValue("playerName", playerName);
+            xmlWriter.createTagWithValue("name", playerName);
             return text;
         }
     }
