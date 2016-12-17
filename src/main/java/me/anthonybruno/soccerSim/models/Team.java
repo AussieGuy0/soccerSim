@@ -1,4 +1,4 @@
-package me.anthonybruno.soccerSim;
+package me.anthonybruno.soccerSim.models;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -14,6 +14,10 @@ public class XmlWriter {
     private int indentation = 0;
     private static final char indentationChar = '\t';
 
+    public XmlWriter(String encoding) {
+        this(encoding, "");
+    }
+
     public XmlWriter(String encoding, String schema) {
         stringBuilder = new StringBuilder(setupXml(encoding, schema));
     }
@@ -74,8 +78,16 @@ public class XmlWriter {
         indentation = 0;
     }
 
-    private String setupXml(String encoding, String dtd) {
-        return "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n" +
-                "<!DOCTYPE team SYSTEM \"" + dtd + "\">\n";
+    private String setupXml(String encoding, String schema) {
+        String out =  "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n";
+        if (schema.endsWith("dtd")) {
+            return  out + "<!DOCTYPE team SYSTEM \"" + schema + "\">\n";
+        } else if (schema.endsWith(".xsd")) {
+            return out;
+        } else if (schema.isEmpty()) {
+            return out;
+        } else {
+            throw new IllegalArgumentException("Schema file must be a .dtd or .xsd file");
+        }
     }
 }

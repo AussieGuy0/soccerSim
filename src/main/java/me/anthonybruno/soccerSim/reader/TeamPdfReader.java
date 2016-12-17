@@ -64,7 +64,7 @@ public class TeamPdfReader {
         if (teamExtractedFromPDf.isEmpty() || !teamExtractedFromPDf.contains(" ")) {
             return; //reached a blank page
         }
-        XmlWriter xmlWriter = new XmlWriter("UTF-8", "team.xsd");
+        XmlWriter xmlWriter = new XmlWriter("UTF-8");
         String text = teamExtractedFromPDf;
 
         if (text.indexOf('\n') < text.indexOf(' ')) {

@@ -1,4 +1,4 @@
-package me.anthonybruno.soccerSim;
+package me.anthonybruno.soccerSim.models;
 
 /**
  * Player is a class that contains information about a player.

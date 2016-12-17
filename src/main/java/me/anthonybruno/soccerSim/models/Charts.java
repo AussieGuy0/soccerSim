@@ -1,4 +1,4 @@
-package me.anthonybruno.soccerSim;
+package me.anthonybruno.soccerSim.models;
 
 /**
  * Created by anthony on 15/07/16.
