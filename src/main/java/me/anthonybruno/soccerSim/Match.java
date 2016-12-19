@@ -10,18 +10,17 @@ import java.util.Random;
  * Match is class that is used to simulate a game between two teams.
  */
 public class Match {
+    private static final Random random = new Random();
 
     private int homeTeamGoals;
     private int awayTeamGoals;
-    private int homeTeamAttemptsTotal;
-    private int awayTeamAttemptsTotal;
     private int homeTeamShotsTotal;
     private int awayTeamShotsTotal;
     private final Team homeTeam;
     private final Team awayTeam;
     private boolean firstHalf;
-    private final Random random;
     private int minute;
+    private AttemptsController attemptsController;
 
     /**
      * Creates and simulates a match between two teams.
@@ -36,11 +35,10 @@ public class Match {
         homeTeamGoals = 0;
         awayTeamGoals = 0;
 
-        homeTeamAttemptsTotal = 0;
         homeTeamShotsTotal = 0;
-        awayTeamAttemptsTotal = 0;
         awayTeamShotsTotal = 0;
-        random = new Random();
+
+        attemptsController = new AttemptsController(homeTeam, awayTeam);
 
     }
 
@@ -49,12 +47,22 @@ public class Match {
         firstHalf = true; //Used to determine which half is currently being played
         playHalf();
         playHalf();
+        announceEndOfGame();
+        finalizeGame();
+
+    }
+
+    public void announceEndOfGame() {
+        int homeTeamAttemptsTotal = attemptsController.getHomeTeamAttempts().getFirstHalfAttempts() + attemptsController.getHomeTeamAttempts().getSecondHalfAttempts();
+        int awayTeamAttemptsTotal = attemptsController.getAwayTeamAttempts().getFirstHalfAttempts() + attemptsController.getAwayTeamAttempts().getSecondHalfAttempts();
         System.out.println("There's the final whistle!");
         System.out.println(homeTeam.getName() + " |     Teams     | " + awayTeam.getName());
         System.out.println("    " + homeTeamGoals + " |     Goals     | " + awayTeamGoals);
         System.out.println("   " + homeTeamAttemptsTotal + " |   Attempts    | " + awayTeamAttemptsTotal);
         System.out.println("    " + homeTeamShotsTotal + " | Shots on Goal | " + awayTeamShotsTotal);
+    }
 
+    public void finalizeGame() {
         if (homeTeamGoals > awayTeamGoals) {
             homeTeam.getStats().addWin(homeTeamGoals, awayTeamGoals);
             awayTeam.getStats().addLoss(awayTeamGoals, homeTeamGoals);
@@ -67,32 +75,26 @@ public class Match {
         }
     }
 
+
+
     /**
      * Determines the number of attempts (shots), the chance each attempt will be a shot on target, and the number
      * of shots on goal during a half.
      */
     private void playHalf() {
-        int homeTeamAttempts, awayTeamAttempts, homeTeamSOGChance, awayTeamSOGChance;
         if (firstHalf) {
             minute = 1;
             System.out.println("Start of first half");
-            homeTeamAttempts = homeTeam.getFirstHalfattempts() - awayTeam.getFirstHalfDefenseAttempts();
-            awayTeamAttempts = awayTeam.getFirstHalfattempts() - homeTeam.getFirstHalfDefenseAttempts();
-            homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getFirstHalfDefensiveShotOnGoal();
-            awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getFirstHalfDefensiveShotOnGoal();
             firstHalf = false;
+            alternateAttempts(attemptsController.getHomeTeamAttempts().getFirstHalfAttempts(), attemptsController.getAwayTeamAttempts().getFirstHalfAttempts(),
+                    attemptsController.getHomeTeamAttempts().getFirstHalfSOG(), attemptsController.getAwayTeamAttempts().getFirstHalfSOG());
         } else {
             minute = 47;
             System.out.println("Start of second half");
-            homeTeamAttempts = homeTeam.getSecondHalfattempts() - awayTeam.getSecondHalfDefenseAttempts();
-            awayTeamAttempts = awayTeam.getSecondHalfattempts() - homeTeam.getSecondHalfDefenseAttempts();
-            homeTeamSOGChance = homeTeam.getShotsGoal() - awayTeam.getSecondHalfDefensiveShotOnGoal();
-            awayTeamSOGChance = awayTeam.getShotsGoal() - homeTeam.getSecondHalfDefensiveShotOnGoal();
+            alternateAttempts(attemptsController.getHomeTeamAttempts().getSecondHalfAttempts(), attemptsController.getAwayTeamAttempts().getSecondHalfAttempts(),
+                    attemptsController.getHomeTeamAttempts().getSecondHalfSOG(), attemptsController.getAwayTeamAttempts().getSecondHalfSOG());
         }
-        homeTeamAttemptsTotal += homeTeamAttempts;
-        awayTeamAttemptsTotal += awayTeamAttempts;
 
-        alternateAttempts(homeTeamAttempts, awayTeamAttempts, homeTeamSOGChance, awayTeamSOGChance);
         System.out.println();
     }
 
