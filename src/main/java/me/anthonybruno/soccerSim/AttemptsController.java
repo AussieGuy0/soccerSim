@@ -7,15 +7,10 @@ import me.anthonybruno.soccerSim.models.Team;
  */
 public class AttemptsController {
 
-    private Team homeTeam;
-    private Team awayTeam;
     private TeamAttempts homeTeamAttempts;
     private TeamAttempts awayTeamAttempts;
 
     public AttemptsController(Team homeTeam, Team awayTeam) {
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-
         homeTeamAttempts =  new TeamAttempts(homeTeam, awayTeam);
         awayTeamAttempts =  new TeamAttempts(awayTeam, homeTeam);
 
@@ -39,14 +34,13 @@ public class AttemptsController {
         private final int strategyModifier;
 
         public TeamAttempts(Team firstTeam, Team opposingTeam) {
-            firstHalfAttempts = firstTeam.getFirstHalfattempts() - opposingTeam.getFirstHalfDefenseAttempts();
-            secondHalfAttempts = firstTeam.getSecondHalfattempts() - opposingTeam.getSecondHalfDefenseAttempts();
-            firstHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getFirstHalfDefensiveShotOnGoal();
-            secondHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getSecondHalfDefensiveShotOnGoal();
+            formationModifier = determineFormationModifier();
+            strategyModifier = determineStrategyModifier();
 
-            //todo: These
-            formationModifier = 0;
-            strategyModifier = 0;
+            firstHalfAttempts = firstTeam.getFirstHalfattempts() - opposingTeam.getFirstHalfDefenseAttempts() + strategyModifier + formationModifier;
+            secondHalfAttempts = firstTeam.getSecondHalfattempts() - opposingTeam.getSecondHalfDefenseAttempts() + strategyModifier + formationModifier;
+            firstHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getFirstHalfDefensiveShotOnGoal() + strategyModifier + formationModifier;
+            secondHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getSecondHalfDefensiveShotOnGoal() + strategyModifier + formationModifier;
         }
 
         public int getFirstHalfAttempts() {
@@ -71,6 +65,15 @@ public class AttemptsController {
 
         public int getStrategyModifier() {
             return strategyModifier;
+        }
+
+        //todo: These
+        private int determineFormationModifier() {
+            return 0;
+        }
+
+        private int determineStrategyModifier() {
+            return 0;
         }
     }
 }

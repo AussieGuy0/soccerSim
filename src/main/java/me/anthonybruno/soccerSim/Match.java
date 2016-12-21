@@ -6,12 +6,13 @@ import me.anthonybruno.soccerSim.models.Team;
 
 import java.util.Random;
 
+import static me.anthonybruno.soccerSim.DiceRoller.rollD10;
+import static me.anthonybruno.soccerSim.DiceRoller.rollD100;
+
 /**
  * Match is class that is used to simulate a game between two teams.
  */
 public class Match {
-    private static final Random random = new Random();
-
     private int homeTeamGoals;
     private int awayTeamGoals;
     private int homeTeamShotsTotal;
@@ -46,10 +47,11 @@ public class Match {
         System.out.println("Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
         firstHalf = true; //Used to determine which half is currently being played
         playHalf();
+        cardCheck();
         playHalf();
+        cardCheck();
         announceEndOfGame();
         finalizeGame();
-
     }
 
     public void announceEndOfGame() {
@@ -73,6 +75,12 @@ public class Match {
             homeTeam.getStats().addDraw(homeTeamGoals, awayTeamGoals);
             awayTeam.getStats().addDraw(awayTeamGoals, homeTeamGoals);
         }
+    }
+
+    private void cardCheck() {
+        //Determine player
+        //Determine result on card chart
+        //Apply effect (Penalty kick, corner kick, free kick, yellow card, red card, injury)
     }
 
 
@@ -113,7 +121,7 @@ public class Match {
         for (int i = 0; i < Math.max(homeTeamAttempts, awayTeamAttempts); i++) {
             if (homeAttemptsSoFar < homeTeamAttempts) {
                 minute += 2;
-                if (random.nextInt(100) + 1 <= homeTeamSOGChance) {
+                if (rollD100() <= homeTeamSOGChance) {
                     determineShot(homeTeam, awayTeam.getGoalie());
                     homeTeamShotsTotal++;
                 }
@@ -122,7 +130,7 @@ public class Match {
 
             if (awayAttemptsSoFar < awayTeamAttempts) {
                 minute += 2;
-                if (random.nextInt(100) + 1 < awayTeamSOGChance) {
+                if (rollD100() < awayTeamSOGChance) {
                     determineShot(awayTeam, homeTeam.getGoalie());
                     awayTeamShotsTotal++;
                 }
@@ -137,9 +145,9 @@ public class Match {
      * @param team The team who is shooting
      */
     private void determineShot(Team team, Goalie goalie) {
-        Player shooter = team.getShooter(random.nextInt(100) + 1);
+        Player shooter = team.getShooter(rollD100());
         System.out.print(minute + "' ");
-        int generatedNumber = random.nextInt(10) + 1;
+        int generatedNumber = rollD10();
         int shotScore = generatedNumber + goalie.getRating();
         if (shotScore >= shooter.getGoal() || generatedNumber == 10) {
             if (team.equals(homeTeam)) {
