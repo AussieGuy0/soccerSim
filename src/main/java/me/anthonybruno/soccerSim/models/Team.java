@@ -120,4 +120,8 @@ public class Team {
     public Goalie getGoalie() {
         return goalies.get(0);
     }
+
+    public Player getCardPlayer(int value) {
+        return players.get(0);
+    }
 }
