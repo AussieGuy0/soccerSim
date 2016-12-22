@@ -4,8 +4,6 @@ import me.anthonybruno.soccerSim.models.Goalie;
 import me.anthonybruno.soccerSim.models.Player;
 import me.anthonybruno.soccerSim.models.Team;
 
-import java.util.Random;
-
 import static me.anthonybruno.soccerSim.DiceRoller.rollD10;
 import static me.anthonybruno.soccerSim.DiceRoller.rollD100;
 
@@ -47,9 +45,9 @@ public class Match {
         System.out.println("Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
         firstHalf = true; //Used to determine which half is currently being played
         playHalf();
-        cardCheck();
+        cardCheckBothTeams();
         playHalf();
-        cardCheck();
+        cardCheckBothTeams();
         announceEndOfGame();
         finalizeGame();
     }
@@ -77,10 +75,39 @@ public class Match {
         }
     }
 
-    private void cardCheck() {
+    private void cardCheckBothTeams() {
+        cardCheck(homeTeam, awayTeam);
+        cardCheck(awayTeam, homeTeam);
+    }
+
+    private void cardCheck(Team team, Team opposingTeam) {
+        Player player = team.getCardPlayer(rollD100());
+        int value = rollD10();
         //Determine player
         //Determine result on card chart
         //Apply effect (Penalty kick, corner kick, free kick, yellow card, red card, injury)
+        if (value > 12) {
+            //give red card to team
+            takePenalty(opposingTeam, team.getGoalie());
+        } else if (value > 3) {
+            //give yellow card to team
+            takeFreeKick(opposingTeam, team.getGoalie());
+        } else if (value > 0) {
+            takeFreeKick(team, opposingTeam.getGoalie());
+        } else if (value > -2) {
+            takeCorner(team, opposingTeam.getGoalie());
+        } else if (value == - 2) {
+            takePenalty(team, opposingTeam.getGoalie());
+        } else {
+            //give red card to opposing team
+            takePenalty(team, opposingTeam.getGoalie());
+
+        }
+
+    }
+
+    private void checkInjury(Player player) {
+
     }
 
 
@@ -144,11 +171,11 @@ public class Match {
      *
      * @param team The team who is shooting
      */
-    private void determineShot(Team team, Goalie goalie) {
+    private void determineShot(Team team, Goalie goalie, int bonus) {
         Player shooter = team.getShooter(rollD100());
         System.out.print(minute + "' ");
         int generatedNumber = rollD10();
-        int shotScore = generatedNumber + goalie.getRating();
+        int shotScore = generatedNumber + goalie.getRating() + bonus;
         if (shotScore >= shooter.getGoal() || generatedNumber == 10) {
             if (team.equals(homeTeam)) {
                 homeTeamGoals++;
@@ -164,6 +191,22 @@ public class Match {
                 System.out.println(Commentator.announceMiss(shooter));
             }
         }
+    }
+
+    private void determineShot(Team team, Goalie goalie) {
+        determineShot(team, goalie, 0);
+    }
+
+    private void takePenalty(Team team, Goalie goalie) {
+        determineShot(team, goalie, 4);
+    }
+
+    private void takeCorner(Team team, Goalie goalie) {
+        determineShot(team, goalie, -4);
+    }
+
+    private void takeFreeKick(Team team, Goalie goalie) {
+        determineShot(team, goalie);
     }
 
 }
