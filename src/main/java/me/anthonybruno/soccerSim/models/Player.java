@@ -8,6 +8,15 @@ public class Player {
     private final String name;
     private final int shotRange;
     private final int goal;
+    private Injury injuryStatus;
+
+    public enum Injury {
+        NONE,
+        MINOR,
+        MATCH,
+        MAJOR,
+        SEASON
+    }
 
     /**
      * Creates a new player with a name, shot range (how likely a shot will be attributed to the player) and a goal
@@ -24,6 +33,7 @@ public class Player {
         this.name = name;
         this.shotRange = shotRange;
         this.goal = goal;
+        this.injuryStatus = Injury.NONE;
     }
 
     /**
@@ -51,6 +61,10 @@ public class Player {
      */
     public int getGoal() {
         return goal;
+    }
+
+    public void setInjury(Injury injury) {
+        this.injuryStatus = injury;
     }
 
 

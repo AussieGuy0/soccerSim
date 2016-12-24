@@ -83,33 +83,79 @@ public class Match {
     private void cardCheck(Team team, Team opposingTeam) {
         Player player = team.getCardPlayer(rollD100());
         int value = rollD10();
-        //Determine player
-        //Determine result on card chart
-        //Apply effect (Penalty kick, corner kick, free kick, yellow card, red card, injury)
         if (value > 12) {
-            //give red card to team
+            giveRedCard(team, player);
             takePenalty(opposingTeam, team.getGoalie());
         } else if (value > 3) {
-            //give yellow card to team
-            takeFreeKick(opposingTeam, team.getGoalie());
+            determineYellowCardEvent(player, team, opposingTeam, value);
         } else if (value > 0) {
             takeFreeKick(team, opposingTeam.getGoalie());
         } else if (value > -2) {
             takeCorner(team, opposingTeam.getGoalie());
-        } else if (value == - 2) {
+        } else if (value == -2) {
             takePenalty(team, opposingTeam.getGoalie());
         } else {
-            //give red card to opposing team
             takePenalty(team, opposingTeam.getGoalie());
-
+            giveRedCard(opposingTeam, opposingTeam.getCardPlayer(rollD100()));
         }
 
     }
 
-    private void checkInjury(Player player) {
+    private void determineYellowCardEvent(Player player, Team team, Team opposingTeam, int value) {
+        giveYellowCard(team, player);
+        switch (value) {
+            case 12:
+                determineInjury(opposingTeam.getCardPlayer(rollD10()));
+                takePenalty(opposingTeam, team.getGoalie());
+                break;
+            case 11:
+                determineInjury(opposingTeam.getCardPlayer(rollD10()));
+                takeFreeKick(opposingTeam, team.getGoalie());
+                break;
+            case 10:
+                determineInjury(player);
+                takeCorner(opposingTeam, team.getGoalie());
+                break;
+            case 9:
+                determineInjury(player);
+                takeFreeKick(opposingTeam, team.getGoalie());
+                break;
+            case 8:
+                takeFreeKick(opposingTeam, team.getGoalie());
+                break;
+            default: break;
+        }
+    }
+
+    private void giveYellowCard(Team team, Player player) {
 
     }
 
+    private void giveRedCard(Team team, Player player) {
+        //opponent gets +2 attempts
+
+    }
+
+    private void determineInjury(Player player) {
+        int value = rollD10();
+        if (value > 10) {
+            player.setInjury(Player.Injury.SEASON);
+            //player out for game + tournement
+        } else if (value == 10) {
+            player.setInjury(Player.Injury.MAJOR);
+        } else if (value == 9) {
+            player.setInjury(Player.Injury.MATCH);
+        } else if (value > 5) {
+            //reduced goal rolls
+            player.setInjury(Player.Injury.MINOR);
+        } else if (value > 0) {
+            player.setInjury(Player.Injury.MINOR);
+        } else{
+            //opponent gets red card
+        }
+
+
+    }
 
 
     /**
@@ -183,10 +229,10 @@ public class Match {
                 awayTeamGoals++;
             }
             System.out.println(Commentator.announceGoal(shooter));
-            System.out.println("The score is now "+ homeTeam.getName()  + ": " + homeTeamGoals + ",  "+awayTeam.getName() +": " + awayTeamGoals);
+            System.out.println("The score is now " + homeTeam.getName() + ": " + homeTeamGoals + ",  " + awayTeam.getName() + ": " + awayTeamGoals);
         } else {
             if (shooter.getGoal() - shotScore >= Math.abs(goalie.getRating())) { //used to determine if goalie saved the shot
-                System.out.println(Commentator.announceSave(shooter,goalie));
+                System.out.println(Commentator.announceSave(shooter, goalie));
             } else {
                 System.out.println(Commentator.announceMiss(shooter));
             }
