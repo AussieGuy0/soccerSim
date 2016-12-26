@@ -37,8 +37,8 @@ public class AttemptsController {
             formationModifier = determineFormationModifier();
             strategyModifier = determineStrategyModifier();
 
-            firstHalfAttempts = firstTeam.getFirstHalfattempts() - opposingTeam.getFirstHalfDefenseAttempts() + strategyModifier + formationModifier;
-            secondHalfAttempts = firstTeam.getSecondHalfattempts() - opposingTeam.getSecondHalfDefenseAttempts() + strategyModifier + formationModifier;
+            firstHalfAttempts = firstTeam.getFirstHalfAttempts() - opposingTeam.getFirstHalfDefenseAttempts() + strategyModifier + formationModifier;
+            secondHalfAttempts = firstTeam.getSecondHalfAttempts() - opposingTeam.getSecondHalfDefenseAttempts() + strategyModifier + formationModifier;
             firstHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getFirstHalfDefensiveShotOnGoal() + strategyModifier + formationModifier;
             secondHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getSecondHalfDefensiveShotOnGoal() + strategyModifier + formationModifier;
         }

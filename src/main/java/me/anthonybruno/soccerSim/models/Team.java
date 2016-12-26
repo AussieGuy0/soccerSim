@@ -10,35 +10,24 @@ import java.util.ArrayList;
  */
 public class Team {
 
-    private final ArrayList<Goalie> goalies;
-    private final ArrayList<Player> players;
     private final String name;
-
-    private final int firstHalfattempts;
-    private final int secondHalfattempts;
     private final int shotsGoal;
-    private final int firstHalfDefenseAttempts;
-    private final int secondHalfDefenseAttempts;
-    private final int firstHalfDefensiveShotOnGoal;
-    private final int secondHalfDefensiveShotOnGoal;
+    private final HalfAttributes firstHalfAttributes;
+    private final HalfAttributes secondHalfAttributes;
     private final String formation;
     private final String strategy;
-    private final Stats stats;
+    private final Stats stats = new Stats();
 
-    public Team(String name, int firstHalfattempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, @SuppressWarnings("SameParameterValue") String strategy) {
-        this.firstHalfattempts = firstHalfattempts;
-        this.secondHalfattempts = secondHalfAttempts;
+    private final ArrayList<Goalie> goalies = new ArrayList<>();
+    private final ArrayList<Player> players = new ArrayList<>();
+
+    public Team(String name, int firstHalfAttempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, @SuppressWarnings("SameParameterValue") String strategy) {
+        this.firstHalfAttributes = new HalfAttributes(firstHalfAttempts, firstHalfDefenseAttempts, firstHalfDefensiveShotOnGoal);
+        this.secondHalfAttributes = new HalfAttributes(secondHalfAttempts, secondHalfDefenseAttempts, secondHalfDefensiveShotOnGoal);
         this.shotsGoal = shotsGoal;
-        this.firstHalfDefenseAttempts = firstHalfDefenseAttempts;
-        this.secondHalfDefenseAttempts = secondHalfDefenseAttempts;
-        this.firstHalfDefensiveShotOnGoal = firstHalfDefensiveShotOnGoal;
-        this.secondHalfDefensiveShotOnGoal = secondHalfDefensiveShotOnGoal;
         this.formation = formation;
         this.strategy = strategy;
         this.name = name;
-        players = new ArrayList<>();
-        goalies = new ArrayList<>();
-        stats = new Stats();
     }
 
     public String getName() {
@@ -57,28 +46,28 @@ public class Team {
         return strategy;
     }
 
-    public int getSecondHalfattempts() {
-        return secondHalfattempts;
+    public int getSecondHalfAttempts() {
+        return secondHalfAttributes.getAttempts();
     }
 
-    public int getFirstHalfattempts() {
-        return firstHalfattempts;
+    public int getFirstHalfAttempts() {
+        return firstHalfAttributes.getAttempts();
     }
 
     public int getFirstHalfDefenseAttempts() {
-        return firstHalfDefenseAttempts;
+        return firstHalfAttributes.getDefenseAttempts();
     }
 
     public int getSecondHalfDefenseAttempts() {
-        return secondHalfDefenseAttempts;
+        return secondHalfAttributes.getDefenseAttempts();
     }
 
     public int getFirstHalfDefensiveShotOnGoal() {
-        return firstHalfDefensiveShotOnGoal;
+        return firstHalfAttributes.getDefensiveShotOnGoal();
     }
 
     public int getSecondHalfDefensiveShotOnGoal() {
-        return secondHalfDefensiveShotOnGoal;
+        return secondHalfAttributes.getDefensiveShotOnGoal();
     }
 
     public Stats getStats() {
@@ -123,5 +112,9 @@ public class Team {
 
     public Player getCardPlayer(int value) {
         return players.get(0);
+    }
+
+    public class CarBuilder {
+
     }
 }

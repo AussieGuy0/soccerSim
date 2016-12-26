@@ -85,17 +85,17 @@ public class Match {
         int value = rollD10();
         if (value > 12) {
             giveRedCard(team, player);
-            takePenalty(opposingTeam, team.getGoalie());
+            takePenalty(opposingTeam, team);
         } else if (value > 3) {
             determineYellowCardEvent(player, team, opposingTeam, value);
         } else if (value > 0) {
-            takeFreeKick(team, opposingTeam.getGoalie());
+            takeFreeKick(team, opposingTeam);
         } else if (value > -2) {
-            takeCorner(team, opposingTeam.getGoalie());
+            takeCorner(team, opposingTeam);
         } else if (value == -2) {
-            takePenalty(team, opposingTeam.getGoalie());
+            takePenalty(team, opposingTeam);
         } else {
-            takePenalty(team, opposingTeam.getGoalie());
+            takePenalty(team, opposingTeam);
             giveRedCard(opposingTeam, opposingTeam.getCardPlayer(rollD100()));
         }
 
@@ -106,22 +106,22 @@ public class Match {
         switch (value) {
             case 12:
                 determineInjury(opposingTeam.getCardPlayer(rollD10()));
-                takePenalty(opposingTeam, team.getGoalie());
+                takePenalty(opposingTeam, team);
                 break;
             case 11:
                 determineInjury(opposingTeam.getCardPlayer(rollD10()));
-                takeFreeKick(opposingTeam, team.getGoalie());
+                takeFreeKick(opposingTeam, team);
                 break;
             case 10:
                 determineInjury(player);
-                takeCorner(opposingTeam, team.getGoalie());
+                takeCorner(opposingTeam, team);
                 break;
             case 9:
                 determineInjury(player);
-                takeFreeKick(opposingTeam, team.getGoalie());
+                takeFreeKick(opposingTeam, team);
                 break;
             case 8:
-                takeFreeKick(opposingTeam, team.getGoalie());
+                takeFreeKick(opposingTeam, team);
                 break;
             default: break;
         }
@@ -195,7 +195,7 @@ public class Match {
             if (homeAttemptsSoFar < homeTeamAttempts) {
                 minute += 2;
                 if (rollD100() <= homeTeamSOGChance) {
-                    determineShot(homeTeam, awayTeam.getGoalie());
+                    determineShot(homeTeam, awayTeam);
                     homeTeamShotsTotal++;
                 }
                 homeAttemptsSoFar++;
@@ -204,7 +204,7 @@ public class Match {
             if (awayAttemptsSoFar < awayTeamAttempts) {
                 minute += 2;
                 if (rollD100() < awayTeamSOGChance) {
-                    determineShot(awayTeam, homeTeam.getGoalie());
+                    determineShot(awayTeam, homeTeam);
                     awayTeamShotsTotal++;
                 }
                 awayAttemptsSoFar++;
@@ -215,15 +215,16 @@ public class Match {
     /**
      * Determines the shot taker and if they score a goal
      *
-     * @param team The team who is shooting
+     * @param shootingTeam The team who is shooting
      */
-    private void determineShot(Team team, Goalie goalie, int bonus) {
-        Player shooter = team.getShooter(rollD100());
+    private void determineShot(Team shootingTeam, Team opposingTeam, int bonus) {
+        Goalie goalie = opposingTeam.getGoalie();
+        Player shooter = shootingTeam.getShooter(rollD100());
         System.out.print(minute + "' ");
         int generatedNumber = rollD10();
         int shotScore = generatedNumber + goalie.getRating() + bonus;
         if (shotScore >= shooter.getGoal() || generatedNumber == 10) {
-            if (team.equals(homeTeam)) {
+            if (shootingTeam.equals(homeTeam)) {
                 homeTeamGoals++;
             } else {
                 awayTeamGoals++;
@@ -239,20 +240,20 @@ public class Match {
         }
     }
 
-    private void determineShot(Team team, Goalie goalie) {
-        determineShot(team, goalie, 0);
+    private void determineShot(Team shootingTeam, Team opposingTeam) {
+        determineShot(shootingTeam, opposingTeam, 0);
     }
 
-    private void takePenalty(Team team, Goalie goalie) {
-        determineShot(team, goalie, 4);
+    private void takePenalty(Team shootingTeam, Team opposingTeam) {
+        determineShot(shootingTeam, opposingTeam, 4);
     }
 
-    private void takeCorner(Team team, Goalie goalie) {
-        determineShot(team, goalie, -4);
+    private void takeCorner(Team shootingTeam, Team opposingTeam) {
+        determineShot(shootingTeam, opposingTeam, -4);
     }
 
-    private void takeFreeKick(Team team, Goalie goalie) {
-        determineShot(team, goalie);
+    private void takeFreeKick(Team shootingTeam, Team opposingTeam) {
+        determineShot(shootingTeam, opposingTeam);
     }
 
 }
