@@ -16,10 +16,19 @@ public class Team {
     private final HalfAttributes secondHalfAttributes;
     private final String formation;
     private final String strategy;
-    private final Stats stats = new Stats();
 
+    private final Stats stats = new Stats();
     private final ArrayList<Goalie> goalies = new ArrayList<>();
     private final ArrayList<Player> players = new ArrayList<>();
+
+    public Team(String name, int shotsGoal, String formation, String strategy, HalfAttributes firstHalfAttributes, HalfAttributes secondHalfAttributes) {
+        this.name = name;
+        this.shotsGoal = shotsGoal;
+        this.formation = formation;
+        this.strategy = strategy;
+        this.firstHalfAttributes = firstHalfAttributes;
+        this.secondHalfAttributes = secondHalfAttributes;
+    }
 
     public Team(String name, int firstHalfAttempts, int secondHalfAttempts, int shotsGoal, int firstHalfDefenseAttempts, int secondHalfDefenseAttempts, int firstHalfDefensiveShotOnGoal, int secondHalfDefensiveShotOnGoal, String formation, @SuppressWarnings("SameParameterValue") String strategy) {
         this.firstHalfAttributes = new HalfAttributes(firstHalfAttempts, firstHalfDefenseAttempts, firstHalfDefensiveShotOnGoal);
@@ -114,7 +123,43 @@ public class Team {
         return players.get(0);
     }
 
-    public class CarBuilder {
+    public static class Builder {
+        private String name;
+        private int shotsGoal;
+        private HalfAttributes firstHalfAttributes;
+        private HalfAttributes secondHalfAttributes;
+        private String formation;
+        private String strategy;
 
+        public void name(String name) {
+            this.name = name;
+        }
+
+        public void shotsGoal(int shotsGoal) {
+            this.shotsGoal = shotsGoal;
+        }
+
+
+        public void firstHalfAttributes(HalfAttributes firstHalfAttributes) {
+            this.firstHalfAttributes = firstHalfAttributes;
+        }
+
+
+        public void secondHalfAttributes(HalfAttributes secondHalfAttributes) {
+            this.secondHalfAttributes = secondHalfAttributes;
+        }
+
+
+        public void formation(String formation) {
+            this.formation = formation;
+        }
+
+        public void strategy(String strategy) {
+            this.strategy = strategy;
+        }
+
+        public Team build() {
+            return new Team(name, shotsGoal, formation, strategy, firstHalfAttributes, secondHalfAttributes);
+        }
     }
 }
