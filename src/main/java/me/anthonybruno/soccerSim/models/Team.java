@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class stores information about a team. A team is composed of players.
@@ -119,7 +120,7 @@ public class Team {
         return goalies.get(0);
     }
 
-    public Player getCardPlayer(int value) {
+    public Player getCardPlayer(int value) { //TODO: THIS
         return players.get(0);
     }
 
@@ -130,6 +131,9 @@ public class Team {
         private HalfAttributes secondHalfAttributes;
         private String formation;
         private String strategy;
+
+        private final List<Player> players = new ArrayList<>();
+        private final List<Goalie> goalies = new ArrayList<>();
 
         public void name(String name) {
             this.name = name;
@@ -156,6 +160,14 @@ public class Team {
 
         public void strategy(String strategy) {
             this.strategy = strategy;
+        }
+
+        public void addPlayer(Player player) {
+            players.add(player);
+        }
+
+        public void addGoalie(Goalie goalie) {
+            goalies.add(goalie);
         }
 
         public Team build() {

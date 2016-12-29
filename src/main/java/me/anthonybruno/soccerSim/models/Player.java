@@ -3,20 +3,11 @@ package me.anthonybruno.soccerSim.models;
 /**
  * Player is a class that contains information about a player.
  */
-public class Player {
+public class Player extends TeamMember {
 
-    private final String name;
     private final int shotRange;
     private final int goal;
-    private Injury injuryStatus;
 
-    public enum Injury {
-        NONE,
-        MINOR,
-        MATCH,
-        MAJOR,
-        SEASON
-    }
 
     /**
      * Creates a new player with a name, shot range (how likely a shot will be attributed to the player) and a goal
@@ -37,15 +28,6 @@ public class Player {
     }
 
     /**
-     * Returns the name of the player.
-     *
-     * @return the player's name.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * Returns the shot range of player.
      *
      * @return the player's shot range.
@@ -63,9 +45,6 @@ public class Player {
         return goal;
     }
 
-    public void setInjury(Injury injury) {
-        this.injuryStatus = injury;
-    }
 
 
 }

@@ -1,8 +1,12 @@
 package me.anthonybruno.soccerSim.reader;
 
+import me.anthonybruno.soccerSim.models.Goalie;
 import me.anthonybruno.soccerSim.models.HalfAttributes;
+import me.anthonybruno.soccerSim.models.Player;
 import me.anthonybruno.soccerSim.models.Team;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,16 +20,19 @@ import java.io.IOException;
  */
 public class XmlParser {
 
-    private final static String TEAM_NAME = "name";
+    private final static String NAME = "name";
     private final static String GOAL_RATING = "goalRating";
     private final static String FORMATION = "formation";
     private final static String STRATEGY = "strategy";
     private final static String PLAYERS = "players";
+    private final static String PLAYER = "player";
+    private final static String GOALIE = "goalie";
+
 
     private final static String HALF_ATTRIBUTES = "halfStats";
     private final static String ATTEMPTS = "attempts";
     private final static String DEFENSIVE_ATTEMPTS = "defensiveAttempts";
-    private final static String DEFENSIVE_SHOTS_ON_GOAL= "defensiveShotsOnGoal";
+    private final static String DEFENSIVE_SHOTS_ON_GOAL = "defensiveShotsOnGoal";
 
     private File file;
 
@@ -34,36 +41,15 @@ public class XmlParser {
     }
 
     public Team parseXmlIntoTeam() {
-        DocumentBuilderFactory factory =
-                DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
-        try {
-            builder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-
-        Document document = null;
-        try {
-            document = builder.parse(file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Element root = document.getDocumentElement();
-        NodeList childNodes = root.getChildNodes();
+        Element root = getDocumentRoot();
         Team.Builder teamBuilder = new Team.Builder();
-        int halfStatsNum = 1;
+        new NodeTraversor(root) {
+            int halfStatsNum = 1;
 
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            Node current = childNodes.item(i);
-            if (!(current instanceof Text)) {
-                String tagName = current.getNodeName();
-                String tagValue = current.getTextContent();
-
+            @Override
+            public void nodeVisited(Node current, String tagName, String tagValue) {
                 switch (tagName) {
-                    case TEAM_NAME:
+                    case NAME:
                         teamBuilder.name(tagValue);
                         break;
                     case GOAL_RATING:
@@ -83,40 +69,72 @@ public class XmlParser {
                         break;
                 }
             }
-        }
+        }.traverseNodes();
         return teamBuilder.build();
     }
 
+    private Element getDocumentRoot() {
+        DocumentBuilderFactory factory =
+                DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        Document document = null;
+        try {
+            document = builder.parse(file);
+        } catch (SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return document.getDocumentElement();
+    }
+
     private void handlePlayers(Team.Builder teamBuilder, Node playersNode) {
-        //TODO: THIS
+        new NodeTraversor(playersNode) {
+            @Override
+            public void nodeVisited(Node current, String tagName, String tagValue) {
+                if (tagName.equals(PLAYER)) {
+                    teamBuilder.addPlayer(parsePlayer(current));
+                } else if (tagName.equals(GOALIE)) {
+                    teamBuilder.addGoalie(parseGoalie(current));
+                }
+            }
+
+            private Goalie parseGoalie(Node current) {
+                return null;
+            }
+
+            private Player parsePlayer(Node current) {
+                return null;
+            }
+        }.traverseNodes();
     }
 
     private void handleHalfStats(Team.Builder teamBuilder, Node halfNode, int halfNum) {
-        int attempts = 0;
-        int defensiveAttempts = 0;
-        int defensiveShotsOnGoal = 0;
-        for (int i = 0; i < halfNode.getChildNodes().getLength(); i++) {
-            Node current = halfNode.getChildNodes().item(i);
-            if (!(halfNode instanceof Text)) {
-                String tagName = current.getNodeName();
-                String tagValue = current.getTextContent();
-
+        final int[] attempts = {0};
+        final int[] defensiveAttempts = {0};
+        final int[] defensiveShotsOnGoal = {0};
+        new NodeTraversor(halfNode) {
+            @Override
+            public void nodeVisited(Node current, String tagName, String tagValue) {
                 switch (tagName) {
                     case ATTEMPTS:
-                        attempts = Integer.parseInt(tagValue);
+                        attempts[0] = Integer.parseInt(tagValue);
                         break;
                     case DEFENSIVE_ATTEMPTS:
-                        defensiveAttempts = Integer.parseInt(tagValue);
+                        defensiveAttempts[0] = Integer.parseInt(tagValue);
                         break;
                     case DEFENSIVE_SHOTS_ON_GOAL:
-                        defensiveShotsOnGoal = Integer.parseInt(tagValue);
+                        defensiveShotsOnGoal[0] = Integer.parseInt(tagValue);
                         break;
                 }
-
             }
-        }
+        }.traverseNodes();
 
-        HalfAttributes halfAttributes = new HalfAttributes(attempts, defensiveAttempts, defensiveShotsOnGoal);
+        HalfAttributes halfAttributes = new HalfAttributes(attempts[0], defensiveAttempts[0], defensiveShotsOnGoal[0]);
         if (halfNum == 1) {
             teamBuilder.firstHalfAttributes(halfAttributes);
         } else {
