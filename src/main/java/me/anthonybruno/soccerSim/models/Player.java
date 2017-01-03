@@ -20,11 +20,10 @@ public class Player extends TeamMember {
      * @param goal      How likely a shot from the player will go in. When shot is taken, a number from 1-10 is generated.
      *                  If the generated number is above or equal to goal rating, the player scores.
      */
-    public Player(String name, int shotRange, int goal) {
-        this.name = name;
+    public Player(String name, int shotRange, int goal, int multiplier) {
+        super(name, multiplier);
         this.shotRange = shotRange;
         this.goal = goal;
-        this.injuryStatus = Injury.NONE;
     }
 
     /**

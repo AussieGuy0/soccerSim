@@ -1,12 +1,10 @@
 package me.anthonybruno.soccerSim.reader;
 
-import me.anthonybruno.soccerSim.models.Goalie;
-import me.anthonybruno.soccerSim.models.HalfAttributes;
-import me.anthonybruno.soccerSim.models.Player;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.models.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -27,6 +25,8 @@ public class XmlParser {
     private final static String PLAYERS = "players";
     private final static String PLAYER = "player";
     private final static String GOALIE = "goalie";
+    private final static String MULTIPLIER = "multiplier";
+    private final static String RATING = "rating";
 
 
     private final static String HALF_ATTRIBUTES = "halfStats";
@@ -65,7 +65,15 @@ public class XmlParser {
                         handleHalfStats(teamBuilder, current, halfStatsNum++);
                         break;
                     case PLAYERS:
-                        handlePlayers(teamBuilder, current);
+                        NodeList playersNodeChildren = current.getChildNodes();
+                        for (int i = 0; i < playersNodeChildren.getLength(); i++) {
+                            Node child = playersNodeChildren.item(i);
+                            if (child.getNodeName().equals(PLAYER)) {
+                                teamBuilder.addPlayer(parsePlayer(child));
+                            } else if (child.getNodeName().equals(GOALIE)) {
+                                teamBuilder.addGoalie(parseGoalie(child));
+                            }
+                        }
                         break;
                 }
             }
@@ -92,25 +100,34 @@ public class XmlParser {
         return document.getDocumentElement();
     }
 
-    private void handlePlayers(Team.Builder teamBuilder, Node playersNode) {
-        new NodeTraversor(playersNode) {
-            @Override
-            public void nodeVisited(Node current, String tagName, String tagValue) {
-                if (tagName.equals(PLAYER)) {
-                    teamBuilder.addPlayer(parsePlayer(current));
-                } else if (tagName.equals(GOALIE)) {
-                    teamBuilder.addGoalie(parseGoalie(current));
-                }
+    private TeamMember parseTeamMember(Node current, boolean goalie) {
+        String name = "";
+        int rating = 0;
+        int multiplier = 0;
+        for (int i = 0; i < current.getChildNodes().getLength(); i++) {
+            Node node = current.getChildNodes().item(i);
+            if (node.getNodeName().equals(NAME)) {
+                name = node.getTextContent();
+            } else if (node.getNodeName().equals(RATING)) {
+                rating = Integer.parseInt(node.getTextContent());
+            } else if (node.getNodeName().equals(MULTIPLIER)) {
+                multiplier = Integer.parseInt(node.getTextContent());
             }
+        }
+        if (goalie) {
+           return new Goalie(name, rating, multiplier);
+        } else {
+           return new Player(name, 0, 0, multiplier);
+        }
 
-            private Goalie parseGoalie(Node current) {
-                return null;
-            }
+    }
 
-            private Player parsePlayer(Node current) {
-                return null;
-            }
-        }.traverseNodes();
+    private Goalie parseGoalie(Node current) {
+        return (Goalie) parseTeamMember(current, true);
+    }
+
+    private Player parsePlayer(Node current) {
+        return (Player) parseTeamMember(current, false);
     }
 
     private void handleHalfStats(Team.Builder teamBuilder, Node halfNode, int halfNum) {

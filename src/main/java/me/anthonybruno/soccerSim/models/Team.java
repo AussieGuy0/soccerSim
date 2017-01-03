@@ -84,21 +84,6 @@ public class Team {
         return stats;
     }
 
-    public void loadPlayers(String s) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(s));
-            while (reader.ready()) {
-                String[] line = reader.readLine().split("\\|");
-                if (line.length == 3) { //is player
-                    players.add(new Player(line[0], Integer.parseInt(line[1]), Integer.parseInt(line[2])));
-                } else { //is Goalie
-                    goalies.add(new Goalie(line[0], Integer.parseInt(line[1])));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Returns the shooter based on generated value from Match.

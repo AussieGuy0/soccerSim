@@ -4,8 +4,14 @@ package me.anthonybruno.soccerSim.models;
  * Created by anthony on 29/12/16.
  */
 public abstract class TeamMember {
-    protected String name;
-    protected Injury injuryStatus;
+    private final String name;
+    private Injury injuryStatus;
+    private final int multiplier;
+
+    protected TeamMember(String name, int multiplier) {
+        this.name = name;
+        this.multiplier = multiplier;
+    }
 
     public enum Injury {
         NONE,
