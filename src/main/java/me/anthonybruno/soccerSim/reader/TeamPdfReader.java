@@ -12,7 +12,6 @@ import java.io.IOException;
 /**
  * Created by anthony on 13/07/16.
  */
-//todo: make work
 public class TeamPdfReader {
     private static final Rectangle2D.Double firstTeamFirstPageRegion = new Rectangle2D.Double(0, 0, 330, 550);
     private static final Rectangle2D.Double secondTeamFirstPageRegion = new Rectangle2D.Double(350, 0, 350, 550);
@@ -73,6 +72,10 @@ public class TeamPdfReader {
 
         xmlWriter.createOpenTag("team");
         String name = text.substring(0, text.indexOf(" "));
+        text = text.substring(text.indexOf(" ") + 1);
+        if (!Character.isDigit(text.charAt(0))) { //handles countries with two words in name
+            name += " " + text.substring(0, text.indexOf(" "));
+        }
         xmlWriter.createTagWithValue("name", name);
 
         for (int i = 0; i < 3; i++) { //skipping stuff we don't care about
@@ -199,8 +202,10 @@ public class TeamPdfReader {
         } else {
             String playerName = text.substring(0, text.indexOf(' '));
             text = text.substring(text.indexOf(' ') + 1);
-            playerName += ' ' + text.substring(0, text.indexOf(' '));
-            text = text.substring(text.indexOf(' ') + 1);
+            while (!isNumeric(text.charAt(0))) {
+                playerName += ' ' + text.substring(0, text.indexOf(' '));
+                text = text.substring(text.indexOf(' ') + 1);
+            }
             xmlWriter.createTagWithValue("name", playerName);
             return text;
         }
