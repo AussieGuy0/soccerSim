@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<team>
+	<name>South Korea</name>
+	<goalRating>14</goalRating>
+	<formation>3-4-3</formation>
+	<strategy>Aggressive</strategy>
+	<halfStats>
+		<attempts>8</attempts>
+		<defensiveAttempts>-1</defensiveAttempts>
+		<defensiveShotsOnGoal>-1</defensiveShotsOnGoal>
+	</halfStats>
+	<halfStats>
+		<attempts>13</attempts>
+		<defensiveAttempts>-5</defensiveAttempts>
+		<defensiveShotsOnGoal>-3</defensiveShotsOnGoal>
+	</halfStats>
+	<players>
+		<player>
+			<name>AHN Jung Hwan</name>
+			<shotRange>1-21</shotRange>
+			<goal>5-10</goal>
+			<injury>1-5</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>YOO Sang Chul</name>
+			<shotRange>22-32</shotRange>
+			<goal>6-10</goal>
+			<injury>6-15</injury>
+			<multiplier>1</multiplier>
+		</player>
+		<player>
+			<name>SEOL Ki Hyeon</name>
+			<shotRange>33-43</shotRange>
+			<goal>6-10</goal>
+			<injury>16-20</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LEE Eul Yong</name>
+			<shotRange>44-54</shotRange>
+			<goal>6-10</goal>
+			<injury>21-27</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>PARK Ji Sung</name>
+			<shotRange>55-65</shotRange>
+			<goal>6-10</goal>
+			<injury>28-32</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>SONG Chong Gug</name>
+			<shotRange>66-76</shotRange>
+			<goal>6-10</goal>
+			<injury>33-37</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>HWANG Sun Hoon</name>
+			<shotRange>77-87</shotRange>
+			<goal>6-10</goal>
+			<injury>38-39</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LEE Chun Soo</name>
+			<shotRange>88</shotRange>
+			<goal>8-10</goal>
+			<injury>40-44</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>HONG Myung Bo</name>
+			<shotRange>89</shotRange>
+			<goal>9-10</goal>
+			<injury>45-50</injury>
+			<multiplier>3</multiplier>
+		</player>
+		<player>
+			<name>KIM Tae Young</name>
+			<shotRange>90</shotRange>
+			<goal>10</goal>
+			<injury>51-60</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LEE Young Pyo</name>
+			<shotRange>91</shotRange>
+			<goal>10</goal>
+			<injury>61-62</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>CHOI Jin Cheul</name>
+			<shotRange>92</shotRange>
+			<goal>10</goal>
+			<injury>63-68</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>KIM Nam Il</name>
+			<shotRange>93</shotRange>
+			<goal>10</goal>
+			<injury>69-75</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>CHA Doo Ri</name>
+			<shotRange>94</shotRange>
+			<goal>10</goal>
+			<injury>76-82</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LEE Min Sung</name>
+			<shotRange>95</shotRange>
+			<goal>10</goal>
+			<injury>83-89</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>CHOI Tae Uk</name>
+			<shotRange>96</shotRange>
+			<goal>10</goal>
+			<injury>90-91</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>CHOI Yong Soo</name>
+			<shotRange>97</shotRange>
+			<goal>10</goal>
+			<injury>92-93</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>HYUN Young Min</name>
+			<shotRange>98</shotRange>
+			<goal>10</goal>
+			<injury>94</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>CHOI Sung Yong</name>
+			<shotRange>99</shotRange>
+			<goal>10</goal>
+			<injury>95</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>YOON Jong Hwan</name>
+			<shotRange>100</shotRange>
+			<goal>10</goal>
+			<injury>96</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<goalie>
+			<name>LEEWonJae</name>
+			<rating>-1</rating>
+			<injury>97-98</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+		<goalie>
+			<name>KIMByungJi</name>
+			<rating>+1</rating>
+			<injury>99-100</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+		<goalie>
+			<name>CHOIEunSung</name>
+			<rating>+2</rating>
+			<injury>x</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+	</players>
+</team>

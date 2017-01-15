@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<team>
+	<name>Iraq</name>
+	<goalRating>10</goalRating>
+	<formation>4-5-1</formation>
+	<strategy>Aggressive</strategy>
+	<halfStats>
+		<attempts>5</attempts>
+		<defensiveAttempts>0</defensiveAttempts>
+		<defensiveShotsOnGoal>0</defensiveShotsOnGoal>
+	</halfStats>
+	<halfStats>
+		<attempts>8</attempts>
+		<defensiveAttempts>-4</defensiveAttempts>
+		<defensiveShotsOnGoal>-2</defensiveShotsOnGoal>
+	</halfStats>
+	<players>
+		<player>
+			<name>Radhi</name>
+			<shotRange>1-80</shotRange>
+			<goal>6-10</goal>
+			<injury>1-4</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Al Roubai Ghanim</name>
+			<shotRange>81</shotRange>
+			<goal>8-10</goal>
+			<injury>5-8</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Hashem Natik</name>
+			<shotRange>82</shotRange>
+			<goal>8-10</goal>
+			<injury>9-16</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Abdul Rahim</name>
+			<shotRange>83</shotRange>
+			<goal>8-10</goal>
+			<injury>17-20</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Gorgis</name>
+			<shotRange>85</shotRange>
+			<goal>8-10</goal>
+			<injury>21-32</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Mohamed Haris</name>
+			<shotRange>86</shotRange>
+			<goal>8-10</goal>
+			<injury>33-39</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Hussein Ali</name>
+			<shotRange>87</shotRange>
+			<goal>8-10</goal>
+			<injury>40-43</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Shaker Nadhum</name>
+			<shotRange>88</shotRange>
+			<goal>9-10</goal>
+			<injury>44-51</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Shaker Samir</name>
+			<shotRange>90</shotRange>
+			<goal>9-10</goal>
+			<injury>52-62</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Khalil Mohamed</name>
+			<shotRange>91</shotRange>
+			<goal>10</goal>
+			<injury>63-70</injury>
+			<multiplier>1</multiplier>
+		</player>
+		<player>
+			<name>Saddam Karim</name>
+			<shotRange>92</shotRange>
+			<goal>10</goal>
+			<injury>71-77</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Obid Annad</name>
+			<shotRange>93</shotRange>
+			<goal>10</goal>
+			<injury>78-79</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Qassim Bassim</name>
+			<shotRange>94</shotRange>
+			<goal>10</goal>
+			<injury>80-82</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Said Hussein</name>
+			<shotRange>95</shotRange>
+			<goal>10</goal>
+			<injury>83-84</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Mahmoud Shaker</name>
+			<shotRange>96</shotRange>
+			<goal>10</goal>
+			<injury>85-86</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Ibrahim</name>
+			<shotRange>97</shotRange>
+			<goal>10</goal>
+			<injury>87-88</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Mohamed Ismail</name>
+			<shotRange>98</shotRange>
+			<goal>10</goal>
+			<injury>89</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Ali Jamal</name>
+			<shotRange>99</shotRange>
+			<goal>10</goal>
+			<injury>90</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>Karim Mohamed</name>
+			<shotRange>100</shotRange>
+			<goal>10</goal>
+			<injury>91</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<goalie>
+			<name>HammoudiRaad</name>
+			<rating>0</rating>
+			<injury>94-98</injury>
+			<multiplier>1</multiplier>
+		</goalie>
+		<goalie>
+			<name>InsayafAbdulfattah</name>
+			<rating>-1</rating>
+			<injury>99-100</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+		<goalie>
+			<name>Jassim</name>
+			<rating>+1</rating>
+			<injury>x</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+	</players>
+</team>

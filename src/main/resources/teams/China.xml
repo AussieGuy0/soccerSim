@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<team>
+	<name>China</name>
+	<goalRating>10</goalRating>
+	<formation>4-4-2</formation>
+	<strategy>Normal</strategy>
+	<halfStats>
+		<attempts>5</attempts>
+		<defensiveAttempts>+6</defensiveAttempts>
+		<defensiveShotsOnGoal>+4</defensiveShotsOnGoal>
+	</halfStats>
+	<halfStats>
+		<attempts>5</attempts>
+		<defensiveAttempts>+4</defensiveAttempts>
+		<defensiveShotsOnGoal>+3</defensiveShotsOnGoal>
+	</halfStats>
+	<players>
+		<player>
+			<name>XU Yunlong</name>
+			<shotRange>1-8</shotRange>
+			<goal>9-10</goal>
+			<injury>1-8</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>YANG Chen</name>
+			<shotRange>9-16</shotRange>
+			<goal>9-10</goal>
+			<injury>9-12</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LI Xiaopeng</name>
+			<shotRange>17-24</shotRange>
+			<goal>9-10</goal>
+			<injury>13-20</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>DU Wei</name>
+			<shotRange>25-32</shotRange>
+			<goal>9-10</goal>
+			<injury>21-24</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>ZHAO Junzhe</name>
+			<shotRange>33-40</shotRange>
+			<goal>9-10</goal>
+			<injury>25-28</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LI Weifeng</name>
+			<shotRange>41-48</shotRange>
+			<goal>9-10</goal>
+			<injury>29-36</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>HAO Haidong</name>
+			<shotRange>49-56</shotRange>
+			<goal>9-10</goal>
+			<injury>37-40</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>QI Hong</name>
+			<shotRange>57-64</shotRange>
+			<goal>9-10</goal>
+			<injury>41-42</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>QU Bo</name>
+			<shotRange>65-72</shotRange>
+			<goal>9-10</goal>
+			<injury>43-46</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>WU Chengying</name>
+			<shotRange>73-80</shotRange>
+			<goal>9-10</goal>
+			<injury>47-52</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>MA Mingyu</name>
+			<shotRange>81-88</shotRange>
+			<goal>9-10</goal>
+			<injury>53-56</injury>
+			<multiplier>1</multiplier>
+		</player>
+		<player>
+			<name>LI Tie</name>
+			<shotRange>89-92</shotRange>
+			<goal>9-10</goal>
+			<injury>57-64</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>YU Genwei</name>
+			<shotRange>93</shotRange>
+			<goal>10</goal>
+			<injury>65-68</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>YANG Pu</name>
+			<shotRange>94</shotRange>
+			<goal>10</goal>
+			<injury>69-76</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>SHAO Jiayi</name>
+			<shotRange>95</shotRange>
+			<goal>10</goal>
+			<injury>77-86</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>SU Maozhen</name>
+			<shotRange>96</shotRange>
+			<goal>10</goal>
+			<injury>87-88</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>FAN Zhiyi</name>
+			<shotRange>97</shotRange>
+			<goal>10</goal>
+			<injury>89-90</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>SUN Jihai</name>
+			<shotRange>98</shotRange>
+			<goal>10</goal>
+			<injury>91-92</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>GAO Yao</name>
+			<shotRange>99</shotRange>
+			<goal>10</goal>
+			<injury>93</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>ZHANG Enhua</name>
+			<shotRange>100</shotRange>
+			<goal>10</goal>
+			<injury>94</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<goalie>
+			<name>JIANGJin</name>
+			<rating>+2</rating>
+			<injury>95-98</injury>
+			<multiplier>1</multiplier>
+		</goalie>
+		<goalie>
+			<name>ANQi</name>
+			<rating>+1</rating>
+			<injury>99-100</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+		<goalie>
+			<name>OUChuliang</name>
+			<rating>+2</rating>
+			<injury>x</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+	</players>
+</team>

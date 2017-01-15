@@ -5,6 +5,7 @@ package me.anthonybruno.soccerSim.models;
  */
 public class Goalie extends TeamMember {
 
+    public static final Goalie noopGoalie = new Goalie("unnamed", 0, 0);
     private final int rating;
 
     public Goalie(String name, int rating, int multiplier) {

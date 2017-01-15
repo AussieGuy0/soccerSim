@@ -5,7 +5,7 @@ package me.anthonybruno.soccerSim.models;
  */
 public class Player extends TeamMember {
 
-    private final int shotRange;
+    private final Range shotRange;
     private final int goal;
 
 
@@ -20,7 +20,7 @@ public class Player extends TeamMember {
      * @param goal      How likely a shot from the player will go in. When shot is taken, a number from 1-10 is generated.
      *                  If the generated number is above or equal to goal rating, the player scores.
      */
-    public Player(String name, int shotRange, int goal, int multiplier) {
+    public Player(String name, Range shotRange, int goal, int multiplier) {
         super(name, multiplier);
         this.shotRange = shotRange;
         this.goal = goal;
@@ -31,7 +31,7 @@ public class Player extends TeamMember {
      *
      * @return the player's shot range.
      */
-    public int getShotRange() {
+    public Range getShotRange() {
         return shotRange;
     }
 

@@ -23,25 +23,21 @@ public class XmlParser {
     private final static String FORMATION = "formation";
     private final static String STRATEGY = "strategy";
     private final static String PLAYERS = "players";
+
     private final static String PLAYER = "player";
     private final static String GOALIE = "goalie";
     private final static String MULTIPLIER = "multiplier";
     private final static String RATING = "rating";
-
+    private final static String SHOT_RANGE = "shotRange";
+    private final static String PLAYER_GOAL_RATING = "goal";
 
     private final static String HALF_ATTRIBUTES = "halfStats";
     private final static String ATTEMPTS = "attempts";
     private final static String DEFENSIVE_ATTEMPTS = "defensiveAttempts";
     private final static String DEFENSIVE_SHOTS_ON_GOAL = "defensiveShotsOnGoal";
 
-    private File file;
-
-    public XmlParser(File file) {
-        this.file = file;
-    }
-
-    public Team parseXmlIntoTeam() {
-        Element root = getDocumentRoot();
+    public Team parseXmlIntoTeam(File file) {
+        Element root = getDocumentRoot(file);
         Team.Builder teamBuilder = new Team.Builder();
         new NodeTraversor(root) {
             int halfStatsNum = 1;
@@ -81,7 +77,7 @@ public class XmlParser {
         return teamBuilder.build();
     }
 
-    private Element getDocumentRoot() {
+    private Element getDocumentRoot(File file) {
         DocumentBuilderFactory factory =
                 DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -104,20 +100,27 @@ public class XmlParser {
         String name = "";
         int rating = 0;
         int multiplier = 0;
+        Range shotRange = null;
+        int goalRating = 0;
         for (int i = 0; i < current.getChildNodes().getLength(); i++) {
             Node node = current.getChildNodes().item(i);
-            if (node.getNodeName().equals(NAME)) {
+            String nodeName = node.getNodeName();
+            if (nodeName.equals(NAME)) {
                 name = node.getTextContent();
-            } else if (node.getNodeName().equals(RATING)) {
+            } else if (nodeName.equals(RATING)) {
                 rating = Integer.parseInt(node.getTextContent());
-            } else if (node.getNodeName().equals(MULTIPLIER)) {
+            } else if (nodeName.equals(MULTIPLIER)) {
                 multiplier = Integer.parseInt(node.getTextContent());
+            } else if (nodeName.equals(SHOT_RANGE)) {
+                shotRange = new Range(node.getTextContent());
+            } else if (nodeName.equals(PLAYER_GOAL_RATING)) {
+                goalRating = new Range(node.getTextContent()).getMin();
             }
         }
         if (goalie) {
            return new Goalie(name, rating, multiplier);
         } else {
-           return new Player(name, 0, 0, multiplier);
+           return new Player(name, shotRange, goalRating, multiplier);
         }
 
     }
@@ -157,10 +160,5 @@ public class XmlParser {
         } else {
             teamBuilder.secondHalfAttributes(halfAttributes);
         }
-    }
-
-    public static void main(String[] args) {
-        XmlParser xmlParser = new XmlParser(new File("/home/anthony/Documents/Projects/soccerSim/src/main/resources/teams/Argentina.xml"));
-        xmlParser.parseXmlIntoTeam();
     }
 }

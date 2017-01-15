@@ -71,6 +71,9 @@ public class TeamPdfReader {
         }
 
         xmlWriter.createOpenTag("team");
+        if (text.startsWith(" ")) {
+            text = text.substring(text.indexOf('\n') + 1); //need this for El Salvador
+        }
         String name = text.substring(0, text.indexOf(" "));
         text = text.substring(text.indexOf(" ") + 1);
         if (!Character.isDigit(text.charAt(0))) { //handles countries with two words in name
@@ -243,5 +246,7 @@ public class TeamPdfReader {
         TeamPdfReader teamPdfReader = new TeamPdfReader("src/main/resources/ruleFiles/Cards1.pdf");
         teamPdfReader.readAllTeamsToFiles();
 
+        teamPdfReader = new TeamPdfReader("src/main/resources/ruleFiles/Cards2.pdf");
+        teamPdfReader.readAllTeamsToFiles();
     }
 }

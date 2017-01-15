@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<team>
+	<name>North Korea</name>
+	<goalRating>15</goalRating>
+	<formation>3-3-4</formation>
+	<strategy>Normal</strategy>
+	<halfStats>
+		<attempts>14</attempts>
+		<defensiveAttempts>+4</defensiveAttempts>
+		<defensiveShotsOnGoal>+2</defensiveShotsOnGoal>
+	</halfStats>
+	<halfStats>
+		<attempts>7</attempts>
+		<defensiveAttempts>+3</defensiveAttempts>
+		<defensiveShotsOnGoal>+2</defensiveShotsOnGoal>
+	</halfStats>
+	<players>
+		<player>
+			<name>PAK Seung Zin</name>
+			<shotRange>1-34</shotRange>
+			<goal>6-10</goal>
+			<injury>1-8</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>PAK Doo Ik</name>
+			<shotRange>35-51</shotRange>
+			<goal>6-10</goal>
+			<injury>9-16</injury>
+			<multiplier>1</multiplier>
+		</player>
+		<player>
+			<name>YANG Seung Kook</name>
+			<shotRange>52-68</shotRange>
+			<goal>6-10</goal>
+			<injury>17-20</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LI Dong Woon</name>
+			<shotRange>69-85</shotRange>
+			<goal>6-10</goal>
+			<injury>21-28</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>HAN Bong Zin</name>
+			<shotRange>86</shotRange>
+			<goal>8-10</goal>
+			<injury>29-36</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>OH Yoon Kyung</name>
+			<shotRange>87</shotRange>
+			<goal>8-10</goal>
+			<injury>37-43</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>HA Yung Won</name>
+			<shotRange>88</shotRange>
+			<goal>8-10</goal>
+			<injury>44-47</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>KIM Seung Il</name>
+			<shotRange>89</shotRange>
+			<goal>8-10</goal>
+			<injury>48-51</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>SHIN Yung Kyoo</name>
+			<shotRange>89</shotRange>
+			<goal>9-10</goal>
+			<injury>52-59</injury>
+			<multiplier>1</multiplier>
+		</player>
+		<player>
+			<name>LIM Zoong Sun</name>
+			<shotRange>90</shotRange>
+			<goal>10</goal>
+			<injury>60-67</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>IM Seung Hwi</name>
+			<shotRange>91</shotRange>
+			<goal>10</goal>
+			<injury>68-75</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>PAK Li Sup</name>
+			<shotRange>92</shotRange>
+			<goal>10</goal>
+			<injury>76-79</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>KANG Bong Chil</name>
+			<shotRange>93</shotRange>
+			<goal>10</goal>
+			<injury>80-83</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>KANG Ryong Woon</name>
+			<shotRange>94</shotRange>
+			<goal>10</goal>
+			<injury>84-86</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>KIM Bong Hwan</name>
+			<shotRange>95</shotRange>
+			<goal>10</goal>
+			<injury>87-89</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>KE Seung Woon</name>
+			<shotRange>96</shotRange>
+			<goal>10</goal>
+			<injury>90</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>KIM Yung Kil</name>
+			<shotRange>97</shotRange>
+			<goal>10</goal>
+			<injury>91</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>RYOO Chang Kil</name>
+			<shotRange>98</shotRange>
+			<goal>10</goal>
+			<injury>92</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>AN Se Bok</name>
+			<shotRange>99</shotRange>
+			<goal>10</goal>
+			<injury>93</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<player>
+			<name>LI Chi An</name>
+			<shotRange>100</shotRange>
+			<goal>10</goal>
+			<injury>94</injury>
+			<multiplier>0</multiplier>
+		</player>
+		<goalie>
+			<name>LEEChangMyung</name>
+			<rating>+1</rating>
+			<injury>95-100</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+		<goalie>
+			<name>LEEKeunHak</name>
+			<rating>+2</rating>
+			<injury>x</injury>
+			<multiplier>0</multiplier>
+		</goalie>
+	</players>
+</team>

@@ -5,7 +5,7 @@ package me.anthonybruno.soccerSim.models;
  */
 public abstract class TeamMember {
     private final String name;
-    private Injury injuryStatus;
+    private Injury injuryStatus = Injury.NONE;
     private final int multiplier;
 
     protected TeamMember(String name, int multiplier) {
