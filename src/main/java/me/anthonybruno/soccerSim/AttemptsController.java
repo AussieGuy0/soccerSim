@@ -37,11 +37,47 @@ public class AttemptsController {
             formationModifier = determineFormationModifier();
             strategyModifier = determineStrategyModifier();
 
-            firstHalfAttempts = firstTeam.getFirstHalfAttempts() - opposingTeam.getFirstHalfDefenseAttempts() + strategyModifier + formationModifier;
-            secondHalfAttempts = firstTeam.getSecondHalfAttempts() - opposingTeam.getSecondHalfDefenseAttempts() + strategyModifier + formationModifier;
-            firstHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getFirstHalfDefensiveShotOnGoal() + strategyModifier + formationModifier;
-            secondHalfSOG = firstTeam.getShotsGoal() - opposingTeam.getSecondHalfDefensiveShotOnGoal() + strategyModifier + formationModifier;
+            firstHalfAttempts = determineFirstHalfAttempts(firstTeam, opposingTeam);
+            secondHalfAttempts = determineSecondHalfAttempts(firstTeam, opposingTeam);
+            firstHalfSOG =  determineFirstHalfSOG(firstTeam, opposingTeam);
+            secondHalfSOG = determineSecondHalfSOG(firstTeam, opposingTeam);
         }
+
+        private int determineSOG(int sog) {
+            sog += strategyModifier + formationModifier;
+            if (sog < 10) {
+                sog = 10;
+            }
+            return sog;
+        }
+
+        private int determineFirstHalfSOG(Team firstTeam, Team opposingTeam) {
+            return determineSOG(firstTeam.getShotsGoal() + opposingTeam.getFirstHalfDefensiveShotOnGoal());
+        }
+
+        private int determineSecondHalfSOG(Team firstTeam, Team opposingTeam) {
+            return determineSOG(firstTeam.getShotsGoal() + opposingTeam.getSecondHalfDefensiveShotOnGoal());
+        }
+
+        private int determineHalfAttempts(int halfAttempts) {
+            halfAttempts += strategyModifier + formationModifier;
+            if (halfAttempts > 25) {
+                halfAttempts = 25;
+            } else if (halfAttempts < 5) {
+                halfAttempts = 5;
+            }
+            return halfAttempts;
+        }
+
+        private int determineFirstHalfAttempts(Team firstTeam, Team opposingTeam) {
+            return determineHalfAttempts(firstTeam.getFirstHalfAttempts() + opposingTeam.getFirstHalfDefenseAttempts());
+        }
+
+        private int determineSecondHalfAttempts(Team firstTeam, Team opposingTeam) {
+            return determineHalfAttempts(firstTeam.getSecondHalfAttempts() + opposingTeam.getSecondHalfDefenseAttempts());
+        }
+
+
 
         public int getFirstHalfAttempts() {
             return firstHalfAttempts;

@@ -5,6 +5,7 @@ import me.anthonybruno.soccerSim.models.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -74,12 +75,13 @@ public class League {
     }
 
     public void playRound() {
+        CountDownLatch latch = new CountDownLatch(schedule.get(roundNumber).size());
         ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         for (int i = 0; i < schedule.get(roundNumber).size(); i++) {
-            pool.execute(new MatchThread(schedule.get(roundNumber).get(i)));
+            pool.execute(new MatchThread(schedule.get(roundNumber).get(i), latch));
         }
         try {
-            Thread.sleep(100);
+            latch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -90,14 +92,17 @@ public class League {
 
     private class MatchThread extends Thread {
         private final Match match;
+        private final CountDownLatch latch;
 
-        public MatchThread(Match match) {
+        public MatchThread(Match match, CountDownLatch latch) {
             this.match = match;
+            this.latch = latch;
         }
 
         @Override
         public void run() {
             match.playMatch();
+            latch.countDown();
         }
     }
 

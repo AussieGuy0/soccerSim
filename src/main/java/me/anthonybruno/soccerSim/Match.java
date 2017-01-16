@@ -52,7 +52,7 @@ public class Match {
         finalizeGame();
     }
 
-    public void announceEndOfGame() {
+    private void announceEndOfGame() {
         int homeTeamAttemptsTotal = attemptsController.getHomeTeamAttempts().getFirstHalfAttempts() + attemptsController.getHomeTeamAttempts().getSecondHalfAttempts();
         int awayTeamAttemptsTotal = attemptsController.getAwayTeamAttempts().getFirstHalfAttempts() + attemptsController.getAwayTeamAttempts().getSecondHalfAttempts();
         System.out.println("There's the final whistle!");
@@ -62,7 +62,7 @@ public class Match {
         System.out.println("    " + homeTeamShotsTotal + " | Shots on Goal | " + awayTeamShotsTotal);
     }
 
-    public void finalizeGame() {
+    private void finalizeGame() {
         if (homeTeamGoals > awayTeamGoals) {
             homeTeam.getStats().addWin(homeTeamGoals, awayTeamGoals);
             awayTeam.getStats().addLoss(awayTeamGoals, homeTeamGoals);
