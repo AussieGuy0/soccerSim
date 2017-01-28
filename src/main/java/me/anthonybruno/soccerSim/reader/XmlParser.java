@@ -36,7 +36,7 @@ public class XmlParser {
     private final static String DEFENSIVE_ATTEMPTS = "defensiveAttempts";
     private final static String DEFENSIVE_SHOTS_ON_GOAL = "defensiveShotsOnGoal";
 
-    public Team parseXmlIntoTeam(File file) {
+    public static Team parseXmlIntoTeam(File file) {
         Element root = getDocumentRoot(file);
         Team.Builder teamBuilder = new Team.Builder();
         new NodeTraversor(root) {
@@ -77,7 +77,7 @@ public class XmlParser {
         return teamBuilder.build();
     }
 
-    private Element getDocumentRoot(File file) {
+    private static Element getDocumentRoot(File file) {
         DocumentBuilderFactory factory =
                 DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -96,7 +96,7 @@ public class XmlParser {
         return document.getDocumentElement();
     }
 
-    private TeamMember parseTeamMember(Node current, boolean goalie) {
+    private static TeamMember parseTeamMember(Node current, boolean goalie) {
         String name = "";
         int rating = 0;
         int multiplier = 0;
@@ -125,15 +125,15 @@ public class XmlParser {
 
     }
 
-    private Goalie parseGoalie(Node current) {
+    private static Goalie parseGoalie(Node current) {
         return (Goalie) parseTeamMember(current, true);
     }
 
-    private Player parsePlayer(Node current) {
+    private static Player parsePlayer(Node current) {
         return (Player) parseTeamMember(current, false);
     }
 
-    private void handleHalfStats(Team.Builder teamBuilder, Node halfNode, int halfNum) {
+    private static void handleHalfStats(Team.Builder teamBuilder, Node halfNode, int halfNum) {
         final int[] attempts = {0};
         final int[] defensiveAttempts = {0};
         final int[] defensiveShotsOnGoal = {0};

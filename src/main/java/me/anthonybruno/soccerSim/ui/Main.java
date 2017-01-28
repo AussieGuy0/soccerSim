@@ -34,6 +34,10 @@ public class Main extends Application {
     private VBox getParent() {
         if (parent == null) {
             Button createFriendlyBtn = new Button("Create Friendly");
+            createFriendlyBtn.setOnAction(event -> {
+                parent.getChildren().clear();
+                parent.getChildren().add(new FriendlyScreen());
+            });
             Button createLeagueBtn = new Button("Create League");
             Button loadLeagueBtn = new Button("Load League");
             parent = new VBox(createFriendlyBtn, createLeagueBtn, loadLeagueBtn);

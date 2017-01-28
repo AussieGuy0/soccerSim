@@ -1,5 +1,6 @@
 package me.anthonybruno.soccerSim.ui;
 
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -9,6 +10,6 @@ public class FriendlyScreen extends VBox {
 
 
     public FriendlyScreen() {
-       getChildren().setAll();
+       getChildren().addAll(new HBox(new TeamPanel(), new TeamPanel()));
     }
 }
