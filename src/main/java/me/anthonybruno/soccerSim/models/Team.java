@@ -105,6 +105,14 @@ public class Team {
         return players.get(0);
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Goalie> getGoalies() {
+        return goalies;
+    }
+
     public static class Builder {
         private String name;
         private int shotsGoal;

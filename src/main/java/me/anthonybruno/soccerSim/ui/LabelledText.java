@@ -11,7 +11,9 @@ public class LabelledText extends HBox {
    private Label textLbl;
 
    public LabelledText(String label) {
-      this.getChildren().addAll(new Label(label), getTextLbl());
+      Label title = new Label(label);
+      title.getStyleClass().add("strong");
+      this.getChildren().addAll(title, getTextLbl());
    }
 
    public void setText(String text) {

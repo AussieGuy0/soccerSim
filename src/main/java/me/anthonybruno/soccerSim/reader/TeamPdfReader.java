@@ -10,7 +10,7 @@ import java.io.IOException;
 
 
 /**
- * Created by anthony on 13/07/16.
+ *  A class that parsers team PDF files into XML files.
  */
 public class TeamPdfReader {
     private static final Rectangle2D.Double firstTeamFirstPageRegion = new Rectangle2D.Double(0, 0, 330, 550);
@@ -59,7 +59,7 @@ public class TeamPdfReader {
         }
     }
 
-    public void writeTeamToFile(String teamExtractedFromPDf, String saveDirectory) {
+    public void writeTeamToFile(String teamExtractedFromPDf, String saveDirectory) { //FIXME: Reduce size of method
         if (teamExtractedFromPDf.isEmpty() || !teamExtractedFromPDf.contains(" ")) {
             return; //reached a blank page
         }
