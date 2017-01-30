@@ -37,4 +37,8 @@ public abstract class TeamMember {
     public Injury getInjury() {
        return injuryStatus;
     }
+
+    public int getMultiplier() {
+        return multiplier;
+    }
 }
