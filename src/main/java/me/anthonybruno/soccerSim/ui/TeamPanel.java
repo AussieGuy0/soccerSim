@@ -1,33 +1,22 @@
 package me.anthonybruno.soccerSim.ui;
 
-import com.itextpdf.kernel.color.Lab;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.util.Callback;
 import me.anthonybruno.soccerSim.models.Goalie;
 import me.anthonybruno.soccerSim.models.Player;
 import me.anthonybruno.soccerSim.models.Team;
-import me.anthonybruno.soccerSim.reader.XmlParser;
-import org.xml.sax.XMLReader;
-
-import java.io.File;
 
 /**
  * Created by anthony on 24/01/17.
  */
 public class TeamPanel extends VBox {
     private Team team;
-    private Button selectTeamBtn;
 
     private TableView<Player> playerTable;
     private TableView<Goalie> goalieTable;
@@ -35,6 +24,9 @@ public class TeamPanel extends VBox {
     private LabelledText goalRatingBox;
     private LabelledText formationBox;
     private LabelledText strategyBox;
+    private LabelledText attemptsBox;
+    private LabelledText defensiveAttemptsBox;
+    private LabelledText defensiveShotsBox;
     private VBox halfAttributesBox;
 
     public TeamPanel() {
@@ -44,8 +36,18 @@ public class TeamPanel extends VBox {
         Label goaliesTitle = new Label("Goalies");
         goaliesTitle.getStyleClass().add("strong");
 
-        getChildren().addAll(getSelectTeamBtn(), getTeamNameBox(), getGoalRatingBox(), getFormationBox(), getStrategyBox(),
+        getChildren().addAll(getTeamNameBox(), getGoalRatingBox(), getFormationBox(), getStrategyBox(),
                 getHalfAttributesBox(), playersTitle, getPlayerTable(), goaliesTitle, getGoalieTable());
+
+    }
+
+    public TeamPanel(Team team) {
+        this();
+        showTeam(team);
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     public void showTeam(Team team) {
@@ -54,6 +56,9 @@ public class TeamPanel extends VBox {
         getGoalRatingBox().setText(team.getShotsGoal() + "");
         getFormationBox().setText(team.getFormation());
         getStrategyBox().setText(team.getStrategy());
+        getAttemptsBox().setText(team.getFirstHalfAttempts() + " | " + team.getSecondHalfAttempts());
+        getDefensiveAttemptsBox().setText(team.getFirstHalfDefenseAttempts() + " | " + team.getSecondHalfDefenseAttempts());
+        getDefensiveShotsBox().setText(team.getFirstHalfDefensiveShotOnGoal() + " | " + team.getSecondHalfDefensiveShotOnGoal());
 
         getPlayerTable().setItems(FXCollections.observableArrayList(team.getPlayers()));
 
@@ -111,32 +116,44 @@ public class TeamPanel extends VBox {
             TableColumn<Goalie, String> nameColumn = new TableColumn<>("Name");
             nameColumn.setCellValueFactory(cellDataFeature -> new SimpleStringProperty(cellDataFeature.getValue().getName()));
             TableColumn<Goalie, Integer> ratingColumn = new TableColumn<>("Rating");
-            ratingColumn.setCellValueFactory(cellDataFeature -> new SimpleObjectProperty<Integer>(cellDataFeature.getValue().getRating()));
+            ratingColumn.setCellValueFactory(cellDataFeature -> new SimpleObjectProperty<>(cellDataFeature.getValue().getRating()));
             goalieTable.getColumns().addAll(nameColumn, ratingColumn);
         }
         return goalieTable;
     }
 
-    private Button getSelectTeamBtn() {
-        if (selectTeamBtn == null) {
-            selectTeamBtn = new Button("Select Team");
-            selectTeamBtn.setOnAction(event -> {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setInitialDirectory(new File("src/main/resources/teams"));
-                fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("xml files", "xml"));
-                File result = fileChooser.showOpenDialog(this.getScene().getWindow());
-                if (result != null) {
-                   showTeam(XmlParser.parseXmlIntoTeam(result));
-                }
-            });
+
+
+    //TODO: Probably change next 3 components to something that looks nicer
+    private LabelledText getAttemptsBox() {
+        if (attemptsBox == null) {
+            attemptsBox = new LabelledText("Attempts: ");
         }
-        return selectTeamBtn;
+        return attemptsBox;
     }
 
-    public VBox getHalfAttributesBox() { //TODO: This
+    private LabelledText getDefensiveAttemptsBox() {
+        if (defensiveAttemptsBox == null) {
+            defensiveAttemptsBox = new LabelledText("Defensive Attempts: ");
+        }
+        return defensiveAttemptsBox;
+    }
+
+    private LabelledText getDefensiveShotsBox() {
+        if (defensiveShotsBox == null) {
+            defensiveShotsBox = new LabelledText("Defensive Shots: ");
+        }
+        return defensiveShotsBox;
+    }
+
+
+    private VBox getHalfAttributesBox() {
         if (halfAttributesBox == null) {
-            halfAttributesBox = new VBox(new Label("First Half | Second Half"), new Label("Attempts"),
-                    new Label("Defensive Attempts"), new Label("Defensive Shots On Goal"));
+            Label heading = new Label("First Half | Second Half");
+            heading.getStyleClass().addAll("strong");
+            heading.setPadding(new Insets(0,0,0,80));
+            halfAttributesBox = new VBox(heading,  getAttemptsBox(),
+                    getDefensiveAttemptsBox(), getDefensiveShotsBox());
         }
         return halfAttributesBox;
     }

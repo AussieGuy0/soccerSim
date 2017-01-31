@@ -1,7 +1,7 @@
 package me.anthonybruno.soccerSim.ui;
 
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * Created by anthony on 24/01/17.
  */
-public class Main extends Application {
+public class Main extends Application implements ContainerController {
     private VBox parent;
     private Scene main;
 
@@ -34,10 +34,7 @@ public class Main extends Application {
     private VBox getParent() {
         if (parent == null) {
             Button createFriendlyBtn = new Button("Create Friendly");
-            createFriendlyBtn.setOnAction(event -> {
-                parent.getChildren().clear();
-                parent.getChildren().add(new FriendlyScreen());
-            });
+            createFriendlyBtn.setOnAction(event -> setContainer(new SelectTeamScreen(this)));
             Button createLeagueBtn = new Button("Create League");
             Button loadLeagueBtn = new Button("Load League");
             parent = new VBox(createFriendlyBtn, createLeagueBtn, loadLeagueBtn);
@@ -47,5 +44,11 @@ public class Main extends Application {
 
     public static void main(String[] args) throws Exception {
         launch(args);
+    }
+
+    @Override
+    public void setContainer(Node node) {
+        parent.getChildren().clear();
+        parent.getChildren().add(node);
     }
 }

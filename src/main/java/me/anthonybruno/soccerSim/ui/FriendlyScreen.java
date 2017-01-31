@@ -1,23 +1,25 @@
 package me.anthonybruno.soccerSim.ui;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import me.anthonybruno.soccerSim.models.Team;
 
 /**
- * Created by anthony on 24/01/17.
+ * Created by anthony on 31/01/17.
  */
-public class FriendlyScreen extends VBox {
+public class FriendlyScreen extends BorderPane {
 
+    private Team homeTeam;
+    private Team awayTeam;
 
-    public FriendlyScreen() {
-        TeamPanel homeTeamPanel = new TeamPanel();
-        TeamPanel awayTeamPanel = new TeamPanel();
+    public FriendlyScreen(Team homeTeam, Team awayTeam) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
 
-        HBox.setHgrow(homeTeamPanel, Priority.ALWAYS);
-        HBox.setHgrow(awayTeamPanel, Priority.ALWAYS);
+        this.setLeft(new TeamPanel(homeTeam));
+        this.setRight(new TeamPanel(homeTeam));
+        this.setCenter(new TextArea());
 
-        HBox hBox = new HBox(homeTeamPanel, awayTeamPanel);
-        getChildren().addAll(hBox);
     }
 }
