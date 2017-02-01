@@ -1,8 +1,16 @@
-package me.anthonybruno.soccerSim;
+package me.anthonybruno.soccerSim.match;
 
+import me.anthonybruno.soccerSim.AttemptsController;
+import me.anthonybruno.soccerSim.Commentator;
+import me.anthonybruno.soccerSim.match.events.MatchEvent;
+import me.anthonybruno.soccerSim.match.events.MatchEventFactory;
+import me.anthonybruno.soccerSim.match.events.ScoringEvent;
 import me.anthonybruno.soccerSim.models.Goalie;
 import me.anthonybruno.soccerSim.models.Player;
 import me.anthonybruno.soccerSim.models.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static me.anthonybruno.soccerSim.DiceRoller.rollD10;
 import static me.anthonybruno.soccerSim.DiceRoller.rollD100;
@@ -11,15 +19,14 @@ import static me.anthonybruno.soccerSim.DiceRoller.rollD100;
  * Match is class that is used to simulate a game between two teams.
  */
 public class Match {
-    private int homeTeamGoals;
-    private int awayTeamGoals;
-    private int homeTeamShotsTotal;
-    private int awayTeamShotsTotal;
+    private AttemptsController attemptsController;
+
     private final Team homeTeam;
     private final Team awayTeam;
-    private boolean firstHalf;
-    private int minute;
-    private AttemptsController attemptsController;
+
+    private MatchData matchData;
+    private final List<MatchListener> listeners = new ArrayList<>();
+    private final MatchEventFactory matchEventFactory;
 
     /**
      * Creates and simulates a match between two teams.
@@ -28,22 +35,15 @@ public class Match {
      * @param awayTeam The team that has travelled to play.
      */
     public Match(Team homeTeam, Team awayTeam) {
+        matchData = new MatchData(homeTeam, awayTeam);
+        matchEventFactory = new MatchEventFactory(matchData);
+        attemptsController = new AttemptsController(homeTeam, awayTeam);
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-
-        homeTeamGoals = 0;
-        awayTeamGoals = 0;
-
-        homeTeamShotsTotal = 0;
-        awayTeamShotsTotal = 0;
-
-        attemptsController = new AttemptsController(homeTeam, awayTeam);
-
     }
 
     public void playMatch() {
-        System.out.println("Match starting: " + homeTeam.getName() + " vs " + awayTeam.getName());
-        firstHalf = true; //Used to determine which half is currently being played
+        System.out.println("Match starting: " + matchData.getHomeTeam().getName() + " vs " + matchData.getAwayTeam().getName());
         playHalf();
         cardCheckBothTeams();
         playHalf();
@@ -57,12 +57,14 @@ public class Match {
         int awayTeamAttemptsTotal = attemptsController.getAwayTeamAttempts().getFirstHalfAttempts() + attemptsController.getAwayTeamAttempts().getSecondHalfAttempts();
         System.out.println("There's the final whistle!");
         System.out.println(homeTeam.getName() + " |     Teams     | " + awayTeam.getName());
-        System.out.println("    " + homeTeamGoals + " |     Goals     | " + awayTeamGoals);
+        System.out.println("    " + matchData.getHomeTeamGoals() + " |     Goals     | " + matchData.getAwayTeamGoals());
         System.out.println("   " + homeTeamAttemptsTotal + " |   Attempts    | " + awayTeamAttemptsTotal);
-        System.out.println("    " + homeTeamShotsTotal + " | Shots on Goal | " + awayTeamShotsTotal);
+        System.out.println("    " +  matchData.getAwayTeamGoals() + " | Shots on Goal | " + matchData.getAwayTeamShotsTotal());
     }
 
     private void finalizeGame() {
+        int homeTeamGoals = matchData.getHomeTeamGoals();
+        int awayTeamGoals = matchData.getAwayTeamGoals();
         if (homeTeamGoals > awayTeamGoals) {
             homeTeam.getStats().addWin(homeTeamGoals, awayTeamGoals);
             awayTeam.getStats().addLoss(awayTeamGoals, homeTeamGoals);
@@ -163,14 +165,12 @@ public class Match {
      * of shots on goal during a half.
      */
     private void playHalf() {
-        if (firstHalf) {
-            minute = 1;
+        if (matchData.isFirstHalf()) {
             System.out.println("Start of first half");
-            firstHalf = false;
             alternateAttempts(attemptsController.getHomeTeamAttempts().getFirstHalfAttempts(), attemptsController.getAwayTeamAttempts().getFirstHalfAttempts(),
                     attemptsController.getHomeTeamAttempts().getFirstHalfSOG(), attemptsController.getAwayTeamAttempts().getFirstHalfSOG());
         } else {
-            minute = 47;
+            matchData.setMinute(47);
             System.out.println("Start of second half");
             alternateAttempts(attemptsController.getHomeTeamAttempts().getSecondHalfAttempts(), attemptsController.getAwayTeamAttempts().getSecondHalfAttempts(),
                     attemptsController.getHomeTeamAttempts().getSecondHalfSOG(), attemptsController.getAwayTeamAttempts().getSecondHalfSOG());
@@ -193,19 +193,19 @@ public class Match {
         int awayAttemptsSoFar = 0;
         for (int i = 0; i < Math.max(homeTeamAttempts, awayTeamAttempts); i++) {
             if (homeAttemptsSoFar < homeTeamAttempts) {
-                minute += 2;
+                matchData.addMinutes(2);
                 if (rollD100() <= homeTeamSOGChance) {
                     determineShot(homeTeam, awayTeam);
-                    homeTeamShotsTotal++;
+                    matchData.incrementHomeTeamShotsTotal();
                 }
                 homeAttemptsSoFar++;
             }
 
             if (awayAttemptsSoFar < awayTeamAttempts) {
-                minute += 2;
+                matchData.addMinutes(2);
                 if (rollD100() < awayTeamSOGChance) {
                     determineShot(awayTeam, homeTeam);
-                    awayTeamShotsTotal++;
+                    matchData.incrementAwayTeamShotsTotal();
                 }
                 awayAttemptsSoFar++;
             }
@@ -220,17 +220,19 @@ public class Match {
     private void determineShot(Team shootingTeam, Team opposingTeam, int bonus) {
         Goalie goalie = opposingTeam.getGoalie();
         Player shooter = shootingTeam.getShooter(rollD100());
-        System.out.print(minute + "' ");
+        System.out.print(matchData.getMinute() + "' ");
         int generatedNumber = rollD10();
         int shotScore = generatedNumber + goalie.getRating() + bonus;
         if (shotScore >= shooter.getGoal() || generatedNumber == 10) {
             if (shootingTeam.equals(homeTeam)) {
-                homeTeamGoals++;
+                matchData.incrementHomeTeamGoals();
             } else {
-                awayTeamGoals++;
+                matchData.incrementAwayTeamGoals();
             }
+            ScoringEvent event = matchEventFactory.createScoringEvent(shootingTeam, shooter);
+            listeners.forEach(matchListener -> matchListener.handleScoringEvent(event));
             System.out.println(Commentator.announceGoal(shooter));
-            System.out.println("The score is now " + homeTeam.getName() + ": " + homeTeamGoals + ",  " + awayTeam.getName() + ": " + awayTeamGoals);
+            System.out.println("The score is now " + homeTeam.getName() + ": " + matchData.getHomeTeamGoals() + ",  " + awayTeam.getName() + ": " + matchData.getAwayTeamGoals());
         } else {
             if (shooter.getGoal() - shotScore >= Math.abs(goalie.getRating())) { //used to determine if goalie saved the shot
                 System.out.println(Commentator.announceSave(shooter, goalie));
@@ -254,6 +256,10 @@ public class Match {
 
     private void takeFreeKick(Team shootingTeam, Team opposingTeam) {
         determineShot(shootingTeam, opposingTeam);
+    }
+
+    public void addMatchListener(MatchListener matchListener) {
+        listeners.add(matchListener);
     }
 
 }

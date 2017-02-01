@@ -1,7 +1,7 @@
 package me.anthonybruno.soccersim;
 
 import me.anthonybruno.soccerSim.AttemptsController;
-import me.anthonybruno.soccerSim.Match;
+import me.anthonybruno.soccerSim.match.Match;
 import me.anthonybruno.soccerSim.models.Team;
 import me.anthonybruno.soccerSim.reader.XmlParser;
 import org.junit.Test;
@@ -17,13 +17,11 @@ public class TeamTest {
 
     @Test
     public void loadFranceAndTurkey() {
-        XmlParser xmlParser = new XmlParser();
-
-        Team france = xmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/France.xml"));
+        Team france = XmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/France.xml"));
         assertEquals(11, france.getFirstHalfAttempts());
         assertEquals(-4, france.getFirstHalfDefenseAttempts());
 
-        Team turkey = xmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/Turkey.xml"));
+        Team turkey = XmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/Turkey.xml"));
         assertEquals(14, turkey.getFirstHalfAttempts());
         assertEquals(-5, turkey.getFirstHalfDefenseAttempts());
 
@@ -34,11 +32,9 @@ public class TeamTest {
 
     @Test
     public void loadCubaAndAustria() {
-        XmlParser xmlParser = new XmlParser();
+        Team cuba = XmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/Cuba.xml"));
 
-        Team cuba = xmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/Cuba.xml"));
-
-        Team austria = xmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/Austria.xml"));
+        Team austria = XmlParser.parseXmlIntoTeam(new File("src/main/resources/teams/Austria.xml"));
 
         AttemptsController attemptsController = new AttemptsController(cuba, austria);
         assertEquals(12, attemptsController.getHomeTeamAttempts().getFirstHalfAttempts());
@@ -46,6 +42,5 @@ public class TeamTest {
 
         assertEquals(19, attemptsController.getHomeTeamAttempts().getFirstHalfSOG());
         assertEquals(30, attemptsController.getAwayTeamAttempts().getFirstHalfSOG());
-        new Match(cuba, austria).playMatch();
     }
 }

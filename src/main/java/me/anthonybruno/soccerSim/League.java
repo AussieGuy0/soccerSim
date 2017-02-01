@@ -1,5 +1,6 @@
 package me.anthonybruno.soccerSim;
 
+import me.anthonybruno.soccerSim.match.Match;
 import me.anthonybruno.soccerSim.models.Stats;
 import me.anthonybruno.soccerSim.models.Team;
 

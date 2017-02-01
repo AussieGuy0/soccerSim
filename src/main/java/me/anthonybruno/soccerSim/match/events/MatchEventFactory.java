@@ -1,0 +1,22 @@
+package me.anthonybruno.soccerSim.match.events;
+
+import me.anthonybruno.soccerSim.match.Match;
+import me.anthonybruno.soccerSim.match.MatchData;
+import me.anthonybruno.soccerSim.models.Player;
+import me.anthonybruno.soccerSim.models.Team;
+
+/**
+ * Created by anthony on 1/02/17.
+ */
+public class MatchEventFactory {
+
+    private MatchData matchData;
+
+    public MatchEventFactory(MatchData matchData) {
+        this.matchData = matchData;
+    }
+
+    public ScoringEvent createScoringEvent(Team scoringTeam, Player scoringPlayer) {
+        return new ScoringEvent(matchData, scoringTeam, scoringPlayer);
+    }
+}
