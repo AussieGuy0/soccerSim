@@ -74,7 +74,7 @@ public class MatchData {
         return firstHalf;
     }
 
-    private void startSecondHalf() {
+    public void startSecondHalf() {
         firstHalf = false;
     }
 

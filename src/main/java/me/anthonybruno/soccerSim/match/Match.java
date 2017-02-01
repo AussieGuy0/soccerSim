@@ -46,6 +46,7 @@ public class Match {
         System.out.println("Match starting: " + matchData.getHomeTeam().getName() + " vs " + matchData.getAwayTeam().getName());
         playHalf();
         cardCheckBothTeams();
+        matchData.startSecondHalf();
         playHalf();
         cardCheckBothTeams();
         announceEndOfGame();

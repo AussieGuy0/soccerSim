@@ -9,12 +9,14 @@ import me.anthonybruno.soccerSim.models.Team;
 public class MatchEvent {
 
     private MatchData matchData;
+    private final int minute;
 
     MatchEvent(MatchData matchData) {
         this.matchData = matchData;
+        minute = matchData.getMinute();
     }
 
     public int getMinute() {
-        return matchData.getMinute();
+        return minute;
     }
 }
