@@ -19,4 +19,8 @@ public class MatchEventFactory {
     public ScoringEvent createScoringEvent(Team scoringTeam, Player scoringPlayer) {
         return new ScoringEvent(matchData, scoringTeam, scoringPlayer);
     }
+
+    public MinuteEvent createMinuteEvent() {
+        return new MinuteEvent(matchData);
+    }
 }

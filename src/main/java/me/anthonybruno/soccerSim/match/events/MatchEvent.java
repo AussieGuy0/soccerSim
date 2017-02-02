@@ -8,15 +8,25 @@ import me.anthonybruno.soccerSim.models.Team;
  */
 public class MatchEvent {
 
-    private MatchData matchData;
     private final int minute;
+    private final int homeScore;
+    private final int awayScore;
 
     MatchEvent(MatchData matchData) {
-        this.matchData = matchData;
         minute = matchData.getMinute();
+        homeScore = matchData.getHomeTeamGoals();
+        awayScore = matchData.getAwayTeamGoals();
     }
 
     public int getMinute() {
         return minute;
+    }
+
+    public int getHomeScore() {
+        return homeScore;
+    }
+
+    public int getAwayScore() {
+        return awayScore;
     }
 }

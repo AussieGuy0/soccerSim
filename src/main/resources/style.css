@@ -1,3 +1,7 @@
 .strong {
     -fx-font-weight: bold;
 }
+
+.h1 {
+    -fx-font-size: 150%;
+}

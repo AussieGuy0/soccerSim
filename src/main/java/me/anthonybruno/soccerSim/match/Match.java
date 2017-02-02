@@ -2,12 +2,14 @@ package me.anthonybruno.soccerSim.match;
 
 import me.anthonybruno.soccerSim.AttemptsController;
 import me.anthonybruno.soccerSim.Commentator;
-import me.anthonybruno.soccerSim.match.events.MatchEvent;
 import me.anthonybruno.soccerSim.match.events.MatchEventFactory;
+import me.anthonybruno.soccerSim.match.events.MinuteEvent;
 import me.anthonybruno.soccerSim.match.events.ScoringEvent;
 import me.anthonybruno.soccerSim.models.Goalie;
 import me.anthonybruno.soccerSim.models.Player;
 import me.anthonybruno.soccerSim.models.Team;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +21,17 @@ import static me.anthonybruno.soccerSim.DiceRoller.rollD100;
  * Match is class that is used to simulate a game between two teams.
  */
 public class Match {
-    private AttemptsController attemptsController;
+    private final AttemptsController attemptsController;
 
     private final Team homeTeam;
     private final Team awayTeam;
 
-    private MatchData matchData;
+    private final MatchOptions matchOptions;
+    private final MatchData matchData;
     private final List<MatchListener> listeners = new ArrayList<>();
     private final MatchEventFactory matchEventFactory;
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Creates and simulates a match between two teams.
@@ -35,6 +40,15 @@ public class Match {
      * @param awayTeam The team that has travelled to play.
      */
     public Match(Team homeTeam, Team awayTeam) {
+        this(null, homeTeam, awayTeam);
+    }
+
+    public Match(MatchOptions matchOptions, Team homeTeam, Team awayTeam) {
+        if (matchOptions == null) {
+            this.matchOptions = MatchOptions.DEFAULT_OPTIONS;
+        } else {
+            this.matchOptions = matchOptions;
+        }
         matchData = new MatchData(homeTeam, awayTeam);
         matchEventFactory = new MatchEventFactory(matchData);
         attemptsController = new AttemptsController(homeTeam, awayTeam);
@@ -43,14 +57,25 @@ public class Match {
     }
 
     public void playMatch() {
+        log.info("Match started between " + matchData.getHomeTeam() + " and " + matchData.getAwayTeam());
         System.out.println("Match starting: " + matchData.getHomeTeam().getName() + " vs " + matchData.getAwayTeam().getName());
         playHalf();
-        cardCheckBothTeams();
+
+        if (matchOptions.isUsingAdvancedRules()) {
+            cardCheckBothTeams();
+        }
+
         matchData.startSecondHalf();
         playHalf();
-        cardCheckBothTeams();
+
+        if (matchOptions.isUsingAdvancedRules()) {
+            cardCheckBothTeams();
+        }
         announceEndOfGame();
-        finalizeGame();
+
+        if (matchOptions.isSeasonMatch()) {
+            finalizeGame();
+        }
     }
 
     private void announceEndOfGame() {
@@ -194,6 +219,9 @@ public class Match {
         int awayAttemptsSoFar = 0;
         for (int i = 0; i < Math.max(homeTeamAttempts, awayTeamAttempts); i++) {
             if (homeAttemptsSoFar < homeTeamAttempts) {
+                delay();
+                MinuteEvent minuteEvent = matchEventFactory.createMinuteEvent();
+                listeners.forEach(matchListener -> matchListener.handleMinuteEvent(minuteEvent));
                 matchData.addMinutes(2);
                 if (rollD100() <= homeTeamSOGChance) {
                     determineShot(homeTeam, awayTeam);
@@ -203,6 +231,9 @@ public class Match {
             }
 
             if (awayAttemptsSoFar < awayTeamAttempts) {
+                delay();
+                MinuteEvent minuteEvent = matchEventFactory.createMinuteEvent();
+                listeners.forEach(matchListener -> matchListener.handleMinuteEvent(minuteEvent));
                 matchData.addMinutes(2);
                 if (rollD100() < awayTeamSOGChance) {
                     determineShot(awayTeam, homeTeam);
@@ -261,6 +292,17 @@ public class Match {
 
     public void addMatchListener(MatchListener matchListener) {
         listeners.add(matchListener);
+    }
+
+    private void delay() {
+        if (matchOptions.getMatchDelay() > 0) {
+            try {
+                Thread.sleep(matchOptions.getMatchDelay());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }
