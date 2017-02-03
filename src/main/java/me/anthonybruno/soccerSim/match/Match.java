@@ -220,9 +220,9 @@ public class Match {
         for (int i = 0; i < Math.max(homeTeamAttempts, awayTeamAttempts); i++) {
             if (homeAttemptsSoFar < homeTeamAttempts) {
                 delay();
+                matchData.addMinutes(2);
                 MinuteEvent minuteEvent = matchEventFactory.createMinuteEvent();
                 listeners.forEach(matchListener -> matchListener.handleMinuteEvent(minuteEvent));
-                matchData.addMinutes(2);
                 if (rollD100() <= homeTeamSOGChance) {
                     determineShot(homeTeam, awayTeam);
                     matchData.incrementHomeTeamShotsTotal();
@@ -232,9 +232,9 @@ public class Match {
 
             if (awayAttemptsSoFar < awayTeamAttempts) {
                 delay();
+                matchData.addMinutes(2);
                 MinuteEvent minuteEvent = matchEventFactory.createMinuteEvent();
                 listeners.forEach(matchListener -> matchListener.handleMinuteEvent(minuteEvent));
-                matchData.addMinutes(2);
                 if (rollD100() < awayTeamSOGChance) {
                     determineShot(awayTeam, homeTeam);
                     matchData.incrementAwayTeamShotsTotal();
@@ -299,7 +299,8 @@ public class Match {
             try {
                 Thread.sleep(matchOptions.getMatchDelay());
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.debug("Sleep was interrupted"); //Probably can safely ignore this
+                Thread.currentThread().interrupt();
             }
         }
 

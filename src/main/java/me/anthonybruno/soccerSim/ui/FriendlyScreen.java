@@ -1,6 +1,9 @@
 package me.anthonybruno.soccerSim.ui;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
@@ -22,6 +25,7 @@ public class FriendlyScreen extends BorderPane {
     private final Team awayTeam;
     private final TextArea matchLog;
 
+    private Thread matchThread;
     private Match match;
 
     private Label minuteLbl;
@@ -41,6 +45,12 @@ public class FriendlyScreen extends BorderPane {
         this.setCenter(matchLog);
         this.setTop(getScoringBar());
 
+        this.sceneProperty().addListener((observableValue, oldScene, newScene) -> {
+            newScene.getWindow().setOnCloseRequest(event -> {
+                matchThread.interrupt();
+            });
+
+        });
         setUpMatch();
     }
 
@@ -98,9 +108,10 @@ public class FriendlyScreen extends BorderPane {
             }
         });
 
-        new Thread(() -> {
+        matchThread = new Thread(() -> {
             match.playMatch();
-        }).start();
+        });
+        matchThread.start();
     }
 
     private HBox getExpandingHorizontalBox() {
