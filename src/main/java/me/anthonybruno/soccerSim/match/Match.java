@@ -2,6 +2,7 @@ package me.anthonybruno.soccerSim.match;
 
 import me.anthonybruno.soccerSim.AttemptsController;
 import me.anthonybruno.soccerSim.Commentator;
+import me.anthonybruno.soccerSim.match.events.BreakEvent;
 import me.anthonybruno.soccerSim.match.events.MatchEventFactory;
 import me.anthonybruno.soccerSim.match.events.MinuteEvent;
 import me.anthonybruno.soccerSim.match.events.ScoringEvent;
@@ -64,6 +65,8 @@ public class Match {
         if (matchOptions.isUsingAdvancedRules()) {
             cardCheckBothTeams();
         }
+        BreakEvent halfTime = matchEventFactory.createBreakEvent();
+        listeners.forEach(matchListener -> matchListener.handleBreakEvent(halfTime));
 
         matchData.startSecondHalf();
         playHalf();
@@ -71,6 +74,8 @@ public class Match {
         if (matchOptions.isUsingAdvancedRules()) {
             cardCheckBothTeams();
         }
+        BreakEvent fullTime = matchEventFactory.createBreakEvent();
+        listeners.forEach(matchListener -> matchListener.handleBreakEvent(fullTime));
         announceEndOfGame();
 
         if (matchOptions.isSeasonMatch()) {

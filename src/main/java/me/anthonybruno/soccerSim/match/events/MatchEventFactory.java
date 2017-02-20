@@ -23,4 +23,8 @@ public class MatchEventFactory {
     public MinuteEvent createMinuteEvent() {
         return new MinuteEvent(matchData);
     }
+
+    public BreakEvent createBreakEvent() {
+        return new BreakEvent(matchData);
+    }
 }

@@ -12,6 +12,7 @@ import javafx.scene.layout.Priority;
 import me.anthonybruno.soccerSim.match.Match;
 import me.anthonybruno.soccerSim.match.MatchListener;
 import me.anthonybruno.soccerSim.match.MatchOptions;
+import me.anthonybruno.soccerSim.match.events.BreakEvent;
 import me.anthonybruno.soccerSim.match.events.MinuteEvent;
 import me.anthonybruno.soccerSim.match.events.ScoringEvent;
 import me.anthonybruno.soccerSim.models.Team;
@@ -90,7 +91,22 @@ public class FriendlyScreen extends BorderPane {
         MatchOptions matchOptions = new MatchOptions();
         matchOptions.setMatchDelay(1000);
         match = new Match(matchOptions, homeTeam, awayTeam);
-        match.addMatchListener(new MatchListener() {
+
+        match.addMatchListener(getMatchListener());
+        matchThread = new Thread(() -> {
+            match.playMatch();
+        });
+        matchThread.start();
+    }
+
+    private HBox getExpandingHorizontalBox() {
+        HBox expandingBox = new HBox();
+        HBox.setHgrow(expandingBox, Priority.ALWAYS);
+        return expandingBox;
+    }
+
+    private MatchListener getMatchListener() {
+        return new MatchListener() {
             @Override
             public void handleScoringEvent(ScoringEvent event) {
                 Platform.runLater(() -> {
@@ -102,22 +118,19 @@ public class FriendlyScreen extends BorderPane {
 
             @Override
             public void handleMinuteEvent(MinuteEvent event) {
-                Platform.runLater(() -> {
-                    getMinuteLbl().setText(event.getMinute() + "'");
-                });
+                Platform.runLater(() -> getMinuteLbl().setText(event.getMinute() + "'"));
             }
-        });
 
-        matchThread = new Thread(() -> {
-            match.playMatch();
-        });
-        matchThread.start();
-    }
+            @Override
+            public void handleBreakEvent(BreakEvent event) {
+                if (event.isHalfTime()) {
+                    Platform.runLater(() -> matchLog.appendText("It's now half time \n"));
+                } else {
+                    Platform.runLater(() -> matchLog.appendText("There's the final whistle! \n"));
+                }
 
-    private HBox getExpandingHorizontalBox() {
-        HBox expandingBox = new HBox();
-        HBox.setHgrow(expandingBox, Priority.ALWAYS);
-        return expandingBox;
+            }
+        };
     }
 
 }
