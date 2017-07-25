@@ -1,9 +1,6 @@
 package me.anthonybruno.soccerSim.ui;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
@@ -15,7 +12,7 @@ import me.anthonybruno.soccerSim.match.MatchOptions;
 import me.anthonybruno.soccerSim.match.events.BreakEvent;
 import me.anthonybruno.soccerSim.match.events.MinuteEvent;
 import me.anthonybruno.soccerSim.match.events.ScoringEvent;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.Team;
 
 /**
  * Created by anthony on 31/01/17.

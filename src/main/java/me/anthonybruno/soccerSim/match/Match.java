@@ -6,9 +6,9 @@ import me.anthonybruno.soccerSim.match.events.BreakEvent;
 import me.anthonybruno.soccerSim.match.events.MatchEventFactory;
 import me.anthonybruno.soccerSim.match.events.MinuteEvent;
 import me.anthonybruno.soccerSim.match.events.ScoringEvent;
-import me.anthonybruno.soccerSim.models.Goalie;
-import me.anthonybruno.soccerSim.models.Player;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.member.Goalie;
+import me.anthonybruno.soccerSim.team.member.Player;
+import me.anthonybruno.soccerSim.team.Team;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

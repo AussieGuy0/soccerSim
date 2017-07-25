@@ -1,4 +1,7 @@
-package me.anthonybruno.soccerSim.models;
+package me.anthonybruno.soccerSim.team;
+
+import me.anthonybruno.soccerSim.team.member.Goalie;
+import me.anthonybruno.soccerSim.team.member.Player;
 
 import java.util.ArrayList;
 import java.util.List;

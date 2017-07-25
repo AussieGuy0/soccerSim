@@ -1,8 +1,9 @@
 package me.anthonybruno.soccerSim;
 
 import me.anthonybruno.soccerSim.match.Match;
-import me.anthonybruno.soccerSim.models.Stats;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.match.MatchOptions;
+import me.anthonybruno.soccerSim.team.Stats;
+import me.anthonybruno.soccerSim.team.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +18,17 @@ public class League {
 
 
     private final List<Team> teams;
-    private final List<List<Match>> schedule;
-    private int roundNumber;
+    private final List<List<Match>> schedule = new ArrayList<>();
+    private int roundNumber = 0;
+
+    private final MatchOptions matchOptions;
 
     public League(List<Team> teams) {
         this.teams = teams;
-        schedule = new ArrayList<>();
+        matchOptions = new MatchOptions();
+        matchOptions.setSeasonMatch(true);
         scheduleRounds();
-        roundNumber = 0;
+
     }
 
     //TODO: Fix this disgusting mess of a method
@@ -37,7 +41,7 @@ public class League {
                 if (j + count >= teams.size()) {
                     break;
                 }
-                round.add(new Match(teams.get(j), teams.get(j + count)));
+                round.add(new Match(matchOptions, teams.get(j), teams.get(j + count)));
                 if (count == 1) {
                     j++;
                 } else if (count == 3) {

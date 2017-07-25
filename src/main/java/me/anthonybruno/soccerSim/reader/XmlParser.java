@@ -1,6 +1,11 @@
 package me.anthonybruno.soccerSim.reader;
 
-import me.anthonybruno.soccerSim.models.*;
+import me.anthonybruno.soccerSim.team.HalfAttributes;
+import me.anthonybruno.soccerSim.models.Range;
+import me.anthonybruno.soccerSim.team.member.Goalie;
+import me.anthonybruno.soccerSim.team.member.Player;
+import me.anthonybruno.soccerSim.team.Team;
+import me.anthonybruno.soccerSim.team.member.TeamMember;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

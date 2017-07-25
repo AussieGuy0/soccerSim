@@ -1,8 +1,8 @@
 package me.anthonybruno.soccerSim;
 
-import me.anthonybruno.soccerSim.models.Goalie;
-import me.anthonybruno.soccerSim.models.Player;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.member.Goalie;
+import me.anthonybruno.soccerSim.team.member.Player;
+import me.anthonybruno.soccerSim.team.Team;
 
 import java.io.BufferedReader;
 import java.io.File;

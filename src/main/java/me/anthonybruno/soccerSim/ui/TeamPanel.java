@@ -8,9 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
-import me.anthonybruno.soccerSim.models.Goalie;
-import me.anthonybruno.soccerSim.models.Player;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.member.Goalie;
+import me.anthonybruno.soccerSim.team.member.Player;
+import me.anthonybruno.soccerSim.team.Team;
 
 /**
  * Created by anthony on 24/01/17.

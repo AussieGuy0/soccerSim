@@ -1,8 +1,7 @@
 package me.anthonybruno.soccersim;
 
 import me.anthonybruno.soccerSim.AttemptsController;
-import me.anthonybruno.soccerSim.match.Match;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.Team;
 import me.anthonybruno.soccerSim.reader.XmlParser;
 import org.junit.Test;
 

@@ -1,4 +1,6 @@
-package me.anthonybruno.soccerSim.models;
+package me.anthonybruno.soccerSim.team.member;
+
+import me.anthonybruno.soccerSim.models.Range;
 
 /**
  * Player is a class that contains information about a player.

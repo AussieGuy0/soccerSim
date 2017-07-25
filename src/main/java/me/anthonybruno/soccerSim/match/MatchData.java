@@ -1,6 +1,6 @@
 package me.anthonybruno.soccerSim.match;
 
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.Team;
 
 /**
  * Created by anthony on 1/02/17.

@@ -1,11 +1,10 @@
 package me.anthonybruno.soccerSim;
 
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.Team;
 import me.anthonybruno.soccerSim.reader.XmlParser;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Simple {
 

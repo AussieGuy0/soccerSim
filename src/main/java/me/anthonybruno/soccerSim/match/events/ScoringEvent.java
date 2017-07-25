@@ -1,8 +1,8 @@
 package me.anthonybruno.soccerSim.match.events;
 
 import me.anthonybruno.soccerSim.match.MatchData;
-import me.anthonybruno.soccerSim.models.Player;
-import me.anthonybruno.soccerSim.models.Team;
+import me.anthonybruno.soccerSim.team.member.Player;
+import me.anthonybruno.soccerSim.team.Team;
 
 /**
  * Created by anthony on 1/02/17.
